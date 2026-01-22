@@ -4,35 +4,62 @@ import styled from "styled-components";
 import ytIcon from "../../assets/youtube.png";
 import xIcon from "../../assets/x.avif";
 import discordIcon from "../../assets/discord.png";
+import gmailIcon from "../../assets/gmail.png";
 import { useState } from "react";
 import { toast } from "sonner";
 
-export const SocialFooter = () => {
-  const [isDiscordOpen, setIsDiscordOpen] = useState(false);
-  const [isClosing, setIsClosing] = useState(false);
+const DISCORD_COLOR = "#5865f2";
+const GMAIL_COLOR = "#ea4335";
 
-  const discordNick = "iamnotasync";
+export const SocialFooter = () => {
+    const [isDiscordOpen, setIsDiscordOpen] = useState(false);
+    const [isGmailOpen, setIsGmailOpen] = useState(false);
+    const [isClosing, setIsClosing] = useState(false);
+
+    const discordNick = "iamnotasync";
+    const gmailNick = "henryisnotaeditor@gmail.com";
 
   const closeDiscordPopup = () => {
     setIsClosing(true);
 
     setTimeout(() => {
-      setIsDiscordOpen(false);
-      setIsClosing(false);
+        setIsDiscordOpen(false);
+        setIsClosing(false);
     }, 250);
-  };
+};
 
-  const handleCopyDiscord = () => {
+const closeGmailPopup = () => {
+    setIsClosing(true);
+
+    setTimeout(() => {
+        setIsGmailOpen(false);
+        setIsClosing(false);
+    }, 250);
+};
+
+const handleCopyDiscord = () => {
     navigator.clipboard.writeText(discordNick);
 
     closeDiscordPopup();
 
     setTimeout(() => {
-      toast.success("Discord username copied!", {
-        description: "You can now paste it on Discord 👾",
-      });
+        toast.success("Discord username copied!", {
+            description: "You can now paste it on Discord 👾",
+        });
     }, 260);
-  };
+};
+
+const handleCopyGmail = () => {
+    navigator.clipboard.writeText(gmailNick);
+
+    closeGmailPopup();
+
+    setTimeout(() => {
+        toast.success("Email copied!", {
+            description: "You can now paste it into Gmail 📧",
+        });
+    }, 260);
+};
 
   return (
     <>
@@ -90,6 +117,18 @@ export const SocialFooter = () => {
                   <span className="social-desc">Feel free to DM me here</span>
                 </div>
               </SocialLink>
+              <SocialLink
+                as="button"
+                type="button"
+                className="gmail"
+                onClick={() => setIsGmailOpen(true)}
+              >
+                <img src={gmailIcon} alt="Gmail" className="gmail-img" />
+                <div className="social-info">
+                  <span className="social-name">Gmail</span>
+                  <span className="social-desc">Professional Email</span>
+                </div>
+              </SocialLink>
             </SocialGrid>
           </SocialSection>
 
@@ -100,21 +139,36 @@ export const SocialFooter = () => {
         </FooterContent>
       </FooterContainer>
 
-      {/* DISCORD POPUP (exemplo simples) */}
-      {isDiscordOpen && (
-    <DiscordOverlay
-        $closing={isClosing}
-        onClick={closeDiscordPopup}
-    >
-        <DiscordPopup
-            $closing={isClosing}
-            onClick={(e) => e.stopPropagation()}
-        >
-            <h2 onClick={handleCopyDiscord}>{discordNick}</h2>
-            <p>Click to copy</p>
-        </DiscordPopup>
-    </DiscordOverlay>
-)}
+       {isDiscordOpen && (
+                    <DiscordOverlay
+                        $closing={isClosing}
+                        onClick={closeDiscordPopup}
+                    >
+                        <DiscordPopup
+                            $closing={isClosing}
+                            $color={DISCORD_COLOR}
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <h2 onClick={handleCopyDiscord}>{discordNick}</h2>
+                            <p>Click to copy</p>
+                        </DiscordPopup>
+                    </DiscordOverlay>
+                )}
+                {isGmailOpen && (
+                    <DiscordOverlay
+                        $closing={isClosing}
+                        onClick={closeGmailPopup}
+                    >
+                        <DiscordPopup
+                            $closing={isClosing}
+                            $color={GMAIL_COLOR}
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <h2 onClick={handleCopyGmail}>{gmailNick}</h2>
+                            <p>Click to copy</p>
+                        </DiscordPopup>
+                    </DiscordOverlay>
+                )}
     </>
   );
 };
@@ -260,6 +314,9 @@ export const SocialFooter = () => {
     margin-right: 20px;
     border-radius: 10px;
   }
+  .gmail-img {
+    max-height: 30px;
+  }
 
   .social-info {
     display: flex;
@@ -290,6 +347,11 @@ export const SocialFooter = () => {
   }
 
   &.youtube:hover {
+    border-color: #ff0000;
+    box-shadow: 0 20px 40px rgba(255, 0, 0, 0.3);
+  }
+  
+  &.gmail:hover {
     border-color: #ff0000;
     box-shadow: 0 20px 40px rgba(255, 0, 0, 0.3);
   }
@@ -335,7 +397,7 @@ const DiscordOverlay = styled.div<{ $closing: boolean }>`
   justify-content: center;
 
   animation: ${({ $closing }) =>
-    $closing ? "fadeOut 0.25s ease forwards" : "fadeIn 0.25s ease forwards"};
+            $closing ? "fadeOut 0.25s ease forwards" : "fadeIn 0.25s ease forwards"};
 
   @keyframes fadeIn {
     from { opacity: 0; }
@@ -348,7 +410,7 @@ const DiscordOverlay = styled.div<{ $closing: boolean }>`
   }
 `;
 
-const DiscordPopup = styled.div<{ $closing: boolean }>`
+const DiscordPopup = styled.div<{ $closing: boolean; $color: string }>`
   background: #1e1f22;
   border-radius: 12px;
   padding: 40px 50px;
@@ -356,19 +418,19 @@ const DiscordPopup = styled.div<{ $closing: boolean }>`
   border: 1px solid #2b2d31;
 
   animation: ${({ $closing }) =>
-    $closing ? "slideDown 0.25s ease forwards" : "slideUp 0.25s ease forwards"};
+            $closing ? "slideDown 0.25s ease forwards" : "slideUp 0.25s ease forwards"};
 
   h2 {
     font-size: 48px;
-    color: #5865f2;
+    color: ${({ $color }) => $color};
     cursor: pointer;
     user-select: none;
     transition: 0.2s ease;
 
     &:hover {
-      transform: scale(1.05);
+        transform: scale(1.05);
     }
-  }
+ }
 
   p {
     margin-top: 10px;

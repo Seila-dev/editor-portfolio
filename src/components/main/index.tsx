@@ -3,6 +3,7 @@ import backgroundVideo from '../../assets/blood-moon.jpg'
 import ytIcon from '../../assets/yt-icon.png'
 import xIcon from '../../assets/x.avif'
 import discordIcon from '../../assets/discord.png'
+import gmailIcon from '../../assets/gmail.png'
 import Projects from "../projects"
 import { useEffect, useState } from "react"
 // import cvDownload from '../../assets/ErickOliveiraRodrigues_TechLeadFullStack_PT_8.pdf'
@@ -17,12 +18,17 @@ interface MouseMovements {
     clientY: number;
 }
 
+const DISCORD_COLOR = "#5865f2";
+const GMAIL_COLOR = "#ea4335";
+
 export const Main = () => {
     const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
     const [isDiscordOpen, setIsDiscordOpen] = useState(false);
+    const [isGmailOpen, setIsGmailOpen] = useState(false);
     const [isClosing, setIsClosing] = useState(false);
 
     const discordNick = "iamnotasync";
+    const gmailNick = "henryisnotaeditor@gmail.com";
 
     useEffect(() => {
         const handleMouseMove = (e: MouseMovements) => {
@@ -57,10 +63,19 @@ export const Main = () => {
     setTimeout(() => {
         setIsDiscordOpen(false);
         setIsClosing(false);
-    }, 250); 
-    };
+    }, 250);
+};
 
-    const handleCopyDiscord = () => {
+const closeGmailPopup = () => {
+    setIsClosing(true);
+
+    setTimeout(() => {
+        setIsGmailOpen(false);
+        setIsClosing(false);
+    }, 250);
+};
+
+const handleCopyDiscord = () => {
     navigator.clipboard.writeText(discordNick);
 
     closeDiscordPopup();
@@ -72,74 +87,106 @@ export const Main = () => {
     }, 260);
 };
 
-    return (
-        <>
-            {/* <Background /> */}
-            <Introduction id="home">
-                <div className="info">
-                    <p>Hey, i'm</p>
-                    <h1>Async</h1>
-                    <span> &gt; <strong>Video Editor</strong> for YouTubers and Streamers</span>
-                    <div className="cv-style">
-                        <a href="https://x.com/AsyncEditor" className="download-cv links" target="_blank" rel="noopener noreferrer">
-                            <img src={xIcon} alt="Icon Linkedin" />
-                            Connect with me on X
+const handleCopyGmail = () => {
+    navigator.clipboard.writeText(gmailNick);
+
+    closeGmailPopup();
+
+    setTimeout(() => {
+        toast.success("Email copied!", {
+            description: "You can now paste it into Gmail 📧",
+        });
+    }, 260);
+};
+
+        return (
+            <>
+                {/* <Background /> */}
+                <Introduction id="home">
+                    <div className="info">
+                        <p>Hey, i'm</p>
+                        <h1>Async</h1>
+                        <span> &gt; <strong>Video Editor</strong> for YouTubers and Streamers</span>
+                        <div className="cv-style">
+                            <a href="https://x.com/AsyncEditor" className="download-cv links" target="_blank" rel="noopener noreferrer">
+                                <img src={xIcon} alt="Icon Linkedin" />
+                                Connect with me on X
+                            </a>
+                            <button
+                                className="second-cta links"
+                                onClick={() => setIsDiscordOpen(true)}
+                            >
+                                <img src={discordIcon} alt="Discord icon" />
+                                DM me on Discord
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className="arrow">
+                        <p>↓</p>
+                    </div>
+                    <div className="social-media">
+                        <a href="https://www.youtube.com/@AsyncEditor/videos" className="logo" target="_blank" rel="noopener noreferrer">
+                            <img src={ytIcon} alt="Youtube icon" />
                         </a>
-                        <button
-                            className="second-cta links"
-                            onClick={() => setIsDiscordOpen(true)}
-                        >
+                        <a href="https://www.linkedin.com/in/erickrodrigues-dev/" className="logo" target="_blank" rel="noopener noreferrer">
+                            <img src={xIcon} alt="X icon" />
+                        </a>
+                        <button className="logo" onClick={() => setIsDiscordOpen(true)}>
                             <img src={discordIcon} alt="Discord icon" />
-                            DM me on Discord
+                        </button>
+                        <button className="logo gmail" onClick={() => setIsGmailOpen(true)}>
+                            <img src={gmailIcon} alt="Gmail icon" />
                         </button>
                     </div>
-                </div>
+                </Introduction>
+                <SectionTransition />
+                <TechSlider />
+                {/* <About /> */}
+                <Projects />
+                <SocialFooter />
+                <BackgroundPrompt>
+                    {/* <video src={backgroundVideo} autoPlay muted loop></video> */}
+                    {/* <img src={backgroundVideo} alt="" /> */}
+                </BackgroundPrompt>
+                <CursorDot style={{ left: `${cursorPosition.x}px`, top: `${cursorPosition.y}px` }}></CursorDot>
+                <CursorOutline style={{ left: `${cursorPosition.x}px`, top: `${cursorPosition.y}px` }}></CursorOutline>
+                {isDiscordOpen && (
+                    <DiscordOverlay
+                        $closing={isClosing}
+                        onClick={closeDiscordPopup}
+                    >
+                        <DiscordPopup
+                            $closing={isClosing}
+                            $color={DISCORD_COLOR}
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <h2 onClick={handleCopyDiscord}>{discordNick}</h2>
+                            <p>Click to copy</p>
+                        </DiscordPopup>
+                    </DiscordOverlay>
+                )}
+                {isGmailOpen && (
+                    <DiscordOverlay
+                        $closing={isClosing}
+                        onClick={closeGmailPopup}
+                    >
+                        <DiscordPopup
+                            $closing={isClosing}
+                            $color={GMAIL_COLOR}
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <h2 onClick={handleCopyGmail}>{gmailNick}</h2>
+                            <p>Click to copy</p>
+                        </DiscordPopup>
+                    </DiscordOverlay>
+                )}
+            </>
+        )
+    }
 
-                <div className="arrow">
-                    <p>↓</p>
-                </div>
-                <div className="social-media">
-                    <a href="https://www.youtube.com/@AsyncEditor/videos" className="logo" target="_blank" rel="noopener noreferrer">
-                        <img src={ytIcon} alt="Youtube icon" />
-                    </a>
-                    <a href="https://www.linkedin.com/in/erickrodrigues-dev/" className="logo" target="_blank" rel="noopener noreferrer">
-                        <img src={xIcon} alt="X icon" />
-                    </a>
-                    <button className="logo" onClick={() => setIsDiscordOpen(true)}>
-                        <img src={discordIcon} alt="Discord icon" />
-                    </button>
-                </div>
-            </Introduction>
-            <SectionTransition />
-            <TechSlider />
-            {/* <About /> */}
-            <Projects />
-            <SocialFooter />
-            <BackgroundPrompt>
-                {/* <video src={backgroundVideo} autoPlay muted loop></video> */}
-                {/* <img src={backgroundVideo} alt="" /> */}
-            </BackgroundPrompt>
-            <CursorDot style={{ left: `${cursorPosition.x}px`, top: `${cursorPosition.y}px` }}></CursorDot>
-            <CursorOutline style={{ left: `${cursorPosition.x}px`, top: `${cursorPosition.y}px` }}></CursorOutline>
-            {isDiscordOpen && (
-    <DiscordOverlay
-        $closing={isClosing}
-        onClick={closeDiscordPopup}
-    >
-        <DiscordPopup
-            $closing={isClosing}
-            onClick={(e) => e.stopPropagation()}
-        >
-            <h2 onClick={handleCopyDiscord}>{discordNick}</h2>
-            <p>Click to copy</p>
-        </DiscordPopup>
-    </DiscordOverlay>
-)}
-        </>
-    )
-}
 
-const CursorDot = styled.div`
+    const CursorDot = styled.div`
     width: 5px;
     height: 5px;
     background-color: white;
@@ -155,7 +202,7 @@ const CursorDot = styled.div`
     }
 `
 
-const CursorOutline = styled.div`
+    const CursorOutline = styled.div`
     width: 30px;
     height: 30px;
     border: 2px solid hsla(0, 0%, 100%, 0.5);
@@ -173,7 +220,7 @@ const CursorOutline = styled.div`
     }
 `
 
-const Introduction = styled.main`
+    const Introduction = styled.main`
   display: flex;
   align-items: center;
   padding: 0 150px;
@@ -303,6 +350,9 @@ const Introduction = styled.main`
         width: 50px;
         height: 50px;
     }
+    .social-media .logo.gmail img{
+        max-height: 30px;
+    }
     .social-media button{
         background: transparent;
     }
@@ -351,7 +401,7 @@ const Introduction = styled.main`
 `
 
 
-const BackgroundPrompt = styled.div`
+    const BackgroundPrompt = styled.div`
     position: fixed;
     left: 0;
     top: 0;
@@ -368,7 +418,7 @@ const BackgroundPrompt = styled.div`
     }
 `
 
-const SectionTransition = styled.div`
+    const SectionTransition = styled.div`
   position: relative;
   width: 100%;
   height: 0px;
@@ -377,7 +427,7 @@ const SectionTransition = styled.div`
   margin-top: -1px; 
 `;
 
-const DiscordOverlay = styled.div<{ $closing: boolean }>`
+    const DiscordOverlay = styled.div<{ $closing: boolean }>`
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.7);
@@ -388,7 +438,7 @@ const DiscordOverlay = styled.div<{ $closing: boolean }>`
   justify-content: center;
 
   animation: ${({ $closing }) =>
-    $closing ? "fadeOut 0.25s ease forwards" : "fadeIn 0.25s ease forwards"};
+            $closing ? "fadeOut 0.25s ease forwards" : "fadeIn 0.25s ease forwards"};
 
   @keyframes fadeIn {
     from { opacity: 0; }
@@ -401,7 +451,7 @@ const DiscordOverlay = styled.div<{ $closing: boolean }>`
   }
 `;
 
-const DiscordPopup = styled.div<{ $closing: boolean }>`
+const DiscordPopup = styled.div<{ $closing: boolean; $color: string }>`
   background: #1e1f22;
   border-radius: 12px;
   padding: 40px 50px;
@@ -409,19 +459,19 @@ const DiscordPopup = styled.div<{ $closing: boolean }>`
   border: 1px solid #2b2d31;
 
   animation: ${({ $closing }) =>
-    $closing ? "slideDown 0.25s ease forwards" : "slideUp 0.25s ease forwards"};
+            $closing ? "slideDown 0.25s ease forwards" : "slideUp 0.25s ease forwards"};
 
   h2 {
     font-size: 48px;
-    color: #5865f2;
+    color: ${({ $color }) => $color};
     cursor: pointer;
     user-select: none;
     transition: 0.2s ease;
 
     &:hover {
-      transform: scale(1.05);
+        transform: scale(1.05);
     }
-  }
+ }
 
   p {
     margin-top: 10px;
