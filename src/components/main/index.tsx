@@ -8,7 +8,7 @@ import Projects from "../projects"
 import { useEffect, useState } from "react"
 // import cvDownload from '../../assets/ErickOliveiraRodrigues_TechLeadFullStack_PT_8.pdf'
 import { TechSlider } from "../TechSlider"
-// import About from "../About"
+import XPostsSection from "../About"
 import { SocialFooter } from "../SocialMedia"
 // import { Background } from "../BackgroundEclipse"
 import { toast } from "sonner";
@@ -142,8 +142,8 @@ const handleCopyGmail = () => {
                 </Introduction>
                 <SectionTransition />
                 <TechSlider />
-                {/* <About /> */}
                 <Projects />
+                <XPostsSection /> 
                 <SocialFooter />
                 <BackgroundPrompt>
                     {/* <video src={backgroundVideo} autoPlay muted loop></video> */}

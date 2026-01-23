@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Home, Users, Tv2, LucideUser2 } from "lucide-react";
+import { Home, Users, Tv2, LucideUser2, PanelTopClose } from "lucide-react";
 import styled, { css } from "styled-components";
 
 
@@ -11,7 +11,7 @@ export default function Header(){
 
     useEffect(() => {
         const handleScroll = () => {
-            const sections = ["home", "videos", "shorts", "socialmedia"];
+            const sections = ["home", "videos", "shorts", "x", "socialmedia"];
             const scrollPosition = window.scrollY + 100;
 
             for (let id of sections) {
@@ -47,13 +47,6 @@ export default function Header(){
                     <TooltipText>Home</TooltipText>
                 </TooltipWrapper>
 
-                {/* <TooltipWrapper>
-                    <NavItem href="#about" $active={activeSection === "about"}>
-                        <User size={18} />
-                    </NavItem>
-                    <TooltipText>About</TooltipText>
-                </TooltipWrapper> */}
-
                 <TooltipWrapper>
                     <NavItem href="#videos" $active={activeSection === "videos"}>
                         <Tv2 size={18} />
@@ -65,6 +58,12 @@ export default function Header(){
                         <LucideUser2 size={18} />
                     </NavItem>
                     <TooltipText>Shorts</TooltipText>
+                </TooltipWrapper>
+                                <TooltipWrapper>
+                    <NavItem href="#x" $active={activeSection === "x"}>
+                        <PanelTopClose size={18} />
+                    </NavItem>
+                    <TooltipText>X</TooltipText>
                 </TooltipWrapper>
                 <TooltipWrapper>
                     <NavItem href="#socialmedia" $active={activeSection === "socialmedia"}>

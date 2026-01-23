@@ -1,368 +1,412 @@
-import { useState } from "react";
+
+import { useEffect, useState } from "react";
 import styled, { keyframes } from "styled-components";
-import { Calendar, Zap } from 'lucide-react';
-import image from '../../assets/koksushibo-test.jpg'
-// import video from '../../assets/subaru-stairs.mp4';
+import image from "../../assets/tanjiro.png";
+import xIcon from "../../assets/x.avif";
 
-const About = () => {
-    const [currentExperience, setCurrentExperience] = useState<string>(
-        "Full Stack Developer and Tech Lead with experience in building, architecting, securing, and maintaining modern web applications and scalable APIs. Currently, I am Tech Lead at Kosting Services, leading a team of developers and designers focused on delivering innovative digital products."
-    );
-
-    const experiences = [
-        {
-            title: "Tech Lead - Kosting Services",
-            description: "Currently working as Tech Lead at a SaaS startup with a team of 3 developers and 2 designers (actively hiring more designers). I am leading the development of real digital products, applying agile methodologies, fostering continuous collaboration, and always aiming to deliver the highest possible quality.",
-            date: "06/2025 - Present",
-            highlight: "Leadership",
-            tags: ["Team Lead", "CI/CD", "SCRUM", "Unit Tests", "Cloudflare R2 & CDN", "Redis" ]
-        },
-        {
-            title: "Full Stack Developer - Freelancer",
-            description: "Worked on custom software projects, delivering complete web applications from architecture design to final deployment. Delivered functional and scalable solutions with strong focus on user experience, performance optimization, and security.",
-            date: "01/2024 - Present",
-            highlight: "Full Stack",
-            tags: ["React.js", "Next.js", "TypeScript",  "Node.js", "Nest.js", "PostgreSQL", "OAuth 2.0"]
-        }
-    ];
-
-    const currentExp = experiences.find(exp => exp.description === currentExperience) || {
-        title: "Career Overview",
-        date: "4+ Years as a Full Stack Developer",
-        icon: <Zap className="w-5 h-5" />,
-        highlight: "Overview",
-        tags: ["JavaScript", "TypeScript", "React.js", "Next.js", "Node.js"]
-    };
-
-    return (
-        <AboutSection id="about">
-            {/* <BackgroundVideo autoPlay loop muted playsInline>
-  <source src={video} type="video/mp4" />
-</BackgroundVideo> */}
-            <Header>
-                <Title>Career</Title>
-                <Subtitle>Gaming Video Editor</Subtitle>
-            </Header>
-
-            <Content>
-                <MainInfo>
-                    <ExperienceHeader>
-                        <div>
-                            <ExperienceTitle>{currentExp.title}</ExperienceTitle>
-                            <ExperienceDate>
-                                <Calendar size={20} />
-                                {currentExp.date}
-                            </ExperienceDate>
-                        </div>
-                    </ExperienceHeader>
-
-                    <Description>{currentExperience}</Description>
-
-                    {currentExp.tags && (
-                        <TagsContainer>
-                            {currentExp.tags.map((tag, index) => (
-                                <Tag key={index}>{tag}</Tag>
-                            ))}
-                        </TagsContainer>
-                    )}
-
-                </MainInfo>
-
-                <ExperienceContainer>
-                    <SectionTitle>Experiences</SectionTitle>
-                    {experiences.map((experience, index) => (
-                        <ExperienceBox
-                            key={index}
-                            onClick={() => setCurrentExperience(experience.description)}
-                            isActive={currentExperience === experience.description}
-                        >
-                            <BoxHeader>
-                                <BoxTitle>{experience.title}</BoxTitle>
-                            </BoxHeader>
-                            <BoxDate>{experience.date.split(' - ')[0]}</BoxDate>
-                        </ExperienceBox>
-                    ))}
-                    
-                    <ExperienceBox
-                        onClick={() => setCurrentExperience("Full Stack Developer and Tech Lead with experience in building, architecting, securing, and maintaining modern web applications and scalable APIs. Currently, I am Tech Lead at Kosting Services, leading a team of developers and designers focused on delivering innovative digital products.")}
-                        isActive={!experiences.find(exp => exp.description === currentExperience)}
-                        isOverview
-                    >
-                        <BoxHeader>
-                            <BoxTitle>Overview</BoxTitle>
-                        </BoxHeader>
-                        <BoxDescription>
-                            Summary of my career as a developer, highlighting my key skills and most relevant experiences.
-                        </BoxDescription>
-                        <BoxDate>+4 Years</BoxDate>
-                    </ExperienceBox>
-                </ExperienceContainer>
-            </Content>
-        </AboutSection>
-    );
+/* =======================
+   TYPES
+======================= */
+type XPost = {
+    id: string;
+    title: string;
+    date: string;
+    embedHtml: string;
 };
 
-export default About;
+/* =======================
+   DATA
+======================= */
+const posts: XPost[] = [
+    {
+        id: "1",
+        title: "Built my first Video Editor Portfolio",
+        date: "January 22, 2026",
+        embedHtml: `
+<blockquote class="twitter-tweet" data-theme="dark"><p lang="en" dir="ltr">Built my first Video Editor Portfolio 💪<a href="https://t.co/tRWwqZp1sR">https://t.co/tRWwqZp1sR</a><br><br>Not perfect yet, but evolving with every edit.<br>Improvement is part of the process<br><br>Consistency is everything. <a href="https://t.co/ojgTKVwziN">pic.twitter.com/ojgTKVwziN</a></p>&mdash; Async | Video Editor (@AsyncEditor) <a href="https://twitter.com/AsyncEditor/status/2014457734230348007?ref_src=twsrc%5Etfw">January 22, 2026</a></blockquote>
+`,
+    },
+    {
+        id: "2",
+        title: "Made this intro for a client",
+        date: "January 19, 2026",
+        embedHtml: `
+    <blockquote class="twitter-tweet" data-theme="dark"><p lang="en" dir="ltr">Made this intro for a client<br><br>Want this editing style on your channel?<br>DM me for a free trial 💪 <a href="https://t.co/gmsur9fSV3">pic.twitter.com/gmsur9fSV3</a></p>&mdash; Async | Video Editor (@AsyncEditor) <a href="https://twitter.com/AsyncEditor/status/2013067195543179617?ref_src=twsrc%5Etfw">January 19, 2026</a></blockquote>
+`,
+    }
+];
 
+/* =======================
+   TWITTER EMBED
+======================= */
+const TwitterEmbed = ({ html }: { html: string }) => {
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    setReady(false);
+
+    if (!(window as any).twttr) {
+      const script = document.createElement("script");
+      script.src = "https://platform.twitter.com/widgets.js";
+      script.async = true;
+      document.body.appendChild(script);
+    }
+
+    const handleRendered = () => {
+      setReady(true);
+    };
+
+    (window as any).twttr?.events?.bind("rendered", handleRendered);
+    (window as any).twttr?.widgets?.load();
+
+    return () => {
+      (window as any).twttr?.events?.unbind("rendered", handleRendered);
+    };
+  }, [html]);
+
+  return (
+    <TweetSlot>
+      {!ready && (
+        <FakeTweet>
+          <FakeHeader>
+            <FakeAvatar />
+            <FakeLine w="120px" />
+          </FakeHeader>
+
+          <FakeLine w="90%" />
+          <FakeLine w="80%" />
+          <FakeLine w="60%" />
+
+          <FakeMedia />
+        </FakeTweet>
+      )}
+
+      <RealTweet ready={ready}>
+        <div dangerouslySetInnerHTML={{ __html: html }} />
+      </RealTweet>
+    </TweetSlot>
+  );
+};
+
+/* =======================
+   COMPONENT
+======================= */
+const XPostsSection = () => {
+  const [currentPost, setCurrentPost] = useState(posts[0]);
+
+  return (
+    <Section id="x">
+    <Layout>
+  <Left>
+    <Header>
+      <Title>Building in Public</Title>
+      <Subtitle>My journey as a Gaming Video Editor on X</Subtitle>
+    </Header>
+
+    <Sidebar>
+      <SidebarTitle>Recent posts on <ImageX src={xIcon} alt="" /></SidebarTitle>
+
+      {posts.map(post => (
+        <PostItem
+          key={post.id}
+          isActive={currentPost.id === post.id}
+          onClick={() => setCurrentPost(post)}
+        >
+          <ItemTitle>{post.title}</ItemTitle>
+          <ItemDate>{post.date}</ItemDate>
+        </PostItem>
+      ))}
+    </Sidebar>
+  </Left>
+
+  <Right>
+    <TwitterEmbed
+      key={currentPost.id}
+      html={currentPost.embedHtml}
+    />
+  </Right>
+</Layout>
+    </Section>
+  );
+};
+
+export default XPostsSection;
+
+/* =======================
+   ANIMATIONS
+======================= */
 const fadeIn = keyframes`
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 `;
 
 const slideIn = keyframes`
-    from { transform: translateX(-20px); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
 `;
 
-const AboutSection = styled.section`
+/* =======================
+   STYLES
+======================= */
+const Section = styled.section`
   position: relative;
-  display: flex;
-  flex-direction: column;
-  padding: 60px 150px;
-  padding-top: 150px;
   min-height: 100vh;
+  padding: 150px 150px 60px;
   color: white;
+  background: linear-gradient(to left, #030033, #000, transparent);
   overflow: hidden;
-  background: linear-gradient(to right, #330000, #000, transparent);
+  display: flex;
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 50%;
-    background-repeat: no-repeat;
+    inset: 0;
+    background-image:
+      linear-gradient(to bottom, rgba(0,0,0,.9), transparent 80%),
+      url(${image});
     background-size: cover;
-    background-position: center right;
-background-image: 
-  linear-gradient(to right, rgba(0, 0, 0, 0.9), transparent 80%),
-  url(${image});
-    opacity: 0.3;
+    background-repeat: no-repeat;
+    background-position: left;
+    opacity: 0.6;
     pointer-events: none;
-    z-index: 1;
   }
-
-
-&::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-
-  background:
-    linear-gradient(to bottom, #000 1px, transparent 50px),  
-    linear-gradient(to top, #000 1px, transparent 50px),  
-    linear-gradient(to left, rgba(0, 0, 0, 0.5), transparent 0%);
-  
-  z-index: 3;
-  pointer-events: none;
-}
 
   > * {
     position: relative;
-    z-index: 3;
+    z-index: 0;
   }
 
   @media (max-width: 1024px) {
-    padding: 40px 20px;
-
-    &::before,
-    &::after {
-      width: 100%;
-        background: linear-gradient(to right, #1a002b, #000, transparent);
-        z-index: 0;
-    }
+    padding: 120px 20px 40px;
   }
 `;
 
+const Layout = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 100px;
+  width: 100%;
+  max-width: 1400px;
+  min-height: calc(100vh - 210px); /* desconta o padding */
+  align-items: center;
+  justify-items: center;
+
+  @media (max-width: 1440px) {
+    grid-template-columns: 1fr;
+    gap: 60px;
+  }
+    
+`;
+
+const Left = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+
+const Right = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+`;
+
+
 const Header = styled.div`
-    margin-bottom: 60px;
-    animation: ${fadeIn} 0.8s ease-out;
+  margin-bottom: 60px;
+  animation: ${fadeIn} 0.8s ease-out;
 `;
 
 const Title = styled.h2`
-    font-size: 48px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    background: var(--primary-light);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  font-size: 48px;
+  font-weight: 700;
+  background: var(--primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+      @media (max-width: 768px) {
+      font-size: 2rem;
+    }
 `;
 
 const Subtitle = styled.p`
-    font-size: 18px;
-    color: #9ca3af;
-    margin: 0;
+  color: #d1d5db;
+  line-height: 1.6;
+  font-size: 1.1rem;
+  max-width: 42rem; 
 `;
 
-const Content = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 80px;
-    max-width: 1400px;
-    width: 100%;
+// const Content = styled.div`
+//   display: flex;
+//   flex-direction: row-reverse;
+//   gap: 80px;
+//   max-width: 1400px;
 
-    @media (max-width: 1024px) {
-        flex-direction: column;
-        gap: 40px;
-    }
-`;
-
-const MainInfo = styled.div`
-    flex: 1.2;
-    animation: ${slideIn} 0.8s ease-out 0.2s both;
-`;
-
-const ExperienceHeader = styled.div`
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 30px;
-`;
-
-const ExperienceTitle = styled.h3`
-    font-size: 32px;
-    margin: 0;
-    // color: var(--primary-light);
-    color: white;
-    font-weight: 600;
-`;
-
-const ExperienceDate = styled.span`
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: #9ca3af;
-    font-size: 16px;
-    margin-top: 10px;
-`;
-
-const Description = styled.p`
-    font-size: 20px;
-    line-height: 1.7;
-    margin-bottom: 30px;
-    color: #e5e7eb;
-`;
-
-const TagsContainer = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 40px;
-`;
-
-const Tag = styled.span`
-    padding: 8px 16px;
-    background: rgba(207, 18, 18, 0.41);
-    border: 1px solid rgb(190, 64, 64);
-    border-radius: 10px;
-    font-size: 14px;
-    color: #ffffffff;
-    font-weight: 500;
-`;
-
-
-const ExperienceContainer = styled.div`
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    animation: ${slideIn} 0.8s ease-out 0.4s both;
-`;
-
-const SectionTitle = styled.h3`
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: #f3f4f6;
-    color: var(--primary-light);
-    font-weight: 600;
-`;
-
-const ExperienceBox = styled.div<{ isActive?: boolean; isOverview?: boolean }>`
-    background: ${props => props.isActive 
-        ? 'linear-gradient(135deg, transparent, rgba(224, 6, 6, 0.17))'
-        : 'transparent'
-    };
-    border-left: 1px solid ${props => props.isActive 
-        ? 'var(--primary)'
-        : 'rgba(255, 0, 0, 0.4);'
-    };
-    padding: 24px;
-    // border-radius: 16px;
-    cursor: pointer;
-    transition: all 0.5s ease;
-    position: relative;
-    overflow: hidden;
-
-    ${props => props.isOverview && `
-        border: 1px solid rgba(246, 92, 92, 0.4);
-    `}
-
-    &::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 100%;
-        width: 2px;
-        background: ${props => props.isActive 
-            ? 'linear-gradient(90deg, var(--primary), #f65c5c)'
-            : 'transparent'
-        };
-        transition: all 0.5s ease;
-    }
-
-    &:hover {
-        // transform: translateX(-4px);
-        border-color: var(--primary);
-
-        &::before {
-            background: linear-gradient(90deg, var(--primary), #ff0d00);
-        }
-    }
-`;
-
-const BoxHeader = styled.div`
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 15px;
-`;
-
-const BoxTitle = styled.h4`
-    font-size: 18px;
-    color: var(--primary-light);
-    color: white;
-    margin: 0;
-    font-weight: 600;
-`;
-
-const BoxDescription = styled.p`
-    font-size: 14px;
-    color: #9ca3af;
-    line-height: 1.5;
-    margin-bottom: 15px;
-`;
-
-const BoxDate = styled.span`
-    font-size: 12px;
-    color: #c9c9c9;
-    font-weight: 500;
-`;
-
-// const BackgroundVideo = styled.video`
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 100%;
-//   object-fit: cover;
-//   opacity: 0.20;
-//   z-index: 0;
-//   pointer-events: none;
+//   @media (max-width: 1024px) {
+//     flex-direction: column;
+//   }
 // `;
+
+// const Main = styled.div`
+//   flex: 1.2;
+//   animation: ${slideIn} 0.8s ease-out 0.2s both;
+// `;
+
+const Sidebar = styled.div`
+  flex: 1;
+  animation: ${slideIn} 0.8s ease-out 0.4s both;
+`;
+
+
+// const Embed = styled.div`
+//   margin: 20px 0 30px;
+//   transform: scale(0.88);
+//   transform-origin: top left;
+//   width: 113%;
+
+//   iframe {
+//     border-radius: 12px;
+//   }
+// `;
+
+// const LazyWrapper = styled.div`
+//   min-height: 420px;
+// `;
+
+const SidebarTitle = styled.h4`
+  font-size: 22px;
+  margin-bottom: 20px;
+  color: white;
+`;
+
+const PostItem = styled.div<{ isActive?: boolean }> `padding: 22px; border-left: 2px solid ${({ isActive }) => (isActive ? "var(--primary-light);" : "rgba(255, 0, 0, 0.3)")}; background: ${({ isActive }) => isActive ? "linear-gradient(135deg, rgb(120, 0, 0), transparent)" : "transparent"}; cursor: pointer; transition: 0.4s; &:hover { border-color: var(--primary-light); } ;`
+
+const ItemTitle = styled.h5`
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+`;
+
+const ItemDate = styled.span`
+  font-size: 12px;
+  color: #c9c9c9;
+`;
+
+
+// const Skeleton = styled.div`
+//   width: 100%;
+//   height: 420px;
+//   border-radius: 12px;
+//   background: linear-gradient(
+//     90deg,
+//     rgba(255,255,255,0.05) 25%,
+//     rgba(255,255,255,0.12) 37%,
+//     rgba(255,255,255,0.05) 63%
+//   );
+//   background-size: 400% 100%;
+//   animation: shimmer 1.4s ease infinite;
+
+//   @keyframes shimmer {
+//     0% { background-position: 100% 0; }
+//     100% { background-position: 0 0; }
+//   }
+// `;
+
+// const FadeWrapper = styled.div<{ isVisible: boolean }>`
+//   opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
+//   transition: opacity 0.4s ease;
+// `;
+
+const TweetSlot = styled.div`
+  position: relative;
+  width: 100%;
+  max-width: 520px; /* 👈 controle real */
+  height: 520px;
+  overflow: hidden;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    height: auto;
+    min-height: 480px;
+  }
+`;
+
+const RealTweet = styled.div<{ ready: boolean }>`
+  opacity: ${({ ready }) => (ready ? 1 : 0)};
+  transition: opacity 0.4s ease;
+  z-index: 1;
+
+  /* centro perfeito */
+  display: flex;
+  justify-content: center;
+
+  /* escala suave baseada na tela */
+  transform: scale(1);
+  transform-origin: top center;
+
+  iframe {
+    border-radius: 14px;
+    max-width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    transform: scale(0.98);
+  }
+  @media (max-width: 500px) {
+    transform: scale(0.9);
+  }
+`;
+
+/* ===== Fake Tweet ===== */
+const FakeTweet = styled.div`
+  position: absolute;
+  inset: 0;
+  padding: 20px;
+  border-radius: 16px;
+  background: #000;
+  border: 1px solid rgba(255,255,255,0.08);
+  z-index: 2;
+`;
+
+const FakeHeader = styled.div`
+  display: flex;
+  gap: 12px;
+  align-items: center;
+`;
+
+const FakeAvatar = styled.div`
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #222;
+`;
+
+const shimmer = keyframes`
+  0% { background-position: 100% 0; }
+  100% { background-position: 0 0; }
+`;
+
+const FakeLine = styled.div<{ w?: string }>`
+  height: 14px;
+  width: ${({ w }) => w || "100%"};
+  background: linear-gradient(90deg, #222 25%, #333 37%, #222 63%);
+  background-size: 400% 100%;
+  animation: ${shimmer} 1.4s infinite;
+`;
+
+const FakeMedia = styled.div`
+  margin-top: 14px;
+  width: 100%;
+  height: 260px;
+  border-radius: 14px;
+  background: #222;
+`;
+
+const ImageX = styled.img`
+  width: 28px;
+    height: 28px;
+    vertical-align: middle;
+    margin-left: 4px;
+`;
