@@ -18,8 +18,16 @@ type XPost = {
    DATA
 ======================= */
 const posts: XPost[] = [
-    {
+      {
         id: "1",
+        title: "just a sneak peek of an edit Im working on",
+        date: "January 26, 2026",
+        embedHtml: `
+        <blockquote class="twitter-tweet" data-theme="dark"><p lang="en" dir="ltr">just a sneak peek of an edit Im working on<a href="https://twitter.com/hashtag/dash?src=hash&amp;ref_src=twsrc%5Etfw">#dash</a> <a href="https://twitter.com/hashtag/edit?src=hash&amp;ref_src=twsrc%5Etfw">#edit</a> <a href="https://twitter.com/hashtag/roblox?src=hash&amp;ref_src=twsrc%5Etfw">#roblox</a> <a href="https://t.co/1rZi3j81d6">pic.twitter.com/1rZi3j81d6</a></p>&mdash; Async | Video Editor (@AsyncEditor) <a href="https://twitter.com/AsyncEditor/status/2015961884294316161?ref_src=twsrc%5Etfw">January 27, 2026</a></blockquote>
+`,
+    },
+    {
+        id: "2",
         title: "Built my first Video Editor Portfolio",
         date: "January 22, 2026",
         embedHtml: `
@@ -27,7 +35,7 @@ const posts: XPost[] = [
 `,
     },
     {
-        id: "2",
+        id: "3",
         title: "Made this intro for a client",
         date: "January 19, 2026",
         embedHtml: `
