@@ -31,8 +31,9 @@ const content = {
 };
 
 const videos = [
-  { id: "K2nubbiNrYk", title: "Roblox Intro Trial" },
+  { id: "NdljsEQqfFc", title: "Dash re-edit" },
   { id: "qW6ZUokrC8M", title: "Roblox Gameplay Footage #2" },
+  { id: "K2nubbiNrYk", title: "Roblox Intro Trial" },
   { id: "l508d1BcUI0", title: "AMV/EDIT - Fyodor Dostoyevesky" },
 ];
 
@@ -103,7 +104,7 @@ function VideoCarousel({ videos }: { videos: { id: string; title: string }[] }) 
 
   const handleScrollBy = (direction: "left" | "right") => {
     if (!carouselRef.current) return;
-    const cardWidth = 460; // largura aproximada do card + gap
+    const cardWidth = 400; // largura aproximada do card + gap
     carouselRef.current.scrollBy({
       left: direction === "left" ? -cardWidth : cardWidth,
       behavior: "smooth",
@@ -465,13 +466,13 @@ const Carousel = styled.div`
   cursor: grab;
   width: 100%;
 
+  /* Chrome, Safari, Edge */
   &::-webkit-scrollbar {
-    height: 8px;
+    display: none;
   }
-  &::-webkit-scrollbar-thumb {
-    background: rgba(255,255,255,0.08);
-    border-radius: 8px;
-  }
+
+  /* Firefox */
+  scrollbar-width: none;
 
   &:active {
     cursor: grabbing;
