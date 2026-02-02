@@ -18,8 +18,16 @@ type XPost = {
    DATA
 ======================= */
 const posts: XPost[] = [
-        {
+          {
         id: "1",
+        title: "Trial for @WarOnRoot - A fast-paced Roblox short-form edit focused on retention",
+        date: "February 2, 2026",
+        embedHtml: `
+        <blockquote class="twitter-tweet" data-theme="dark"><p lang="en" dir="ltr">Trial for <a href="https://twitter.com/WarOnRoot?ref_src=twsrc%5Etfw">@WarOnRoot</a> - a fast-paced Roblox short-form edit focused on retention<br><br>Want this style on your channel?<br>Feel free to DM me for a trial 💪 <a href="https://t.co/anIlwTTZRJ">pic.twitter.com/anIlwTTZRJ</a></p>&mdash; Async | Video Editor (@AsyncEditor) <a href="https://twitter.com/AsyncEditor/status/2018121485538185486?ref_src=twsrc%5Etfw">February 2, 2026</a></blockquote>
+`,
+    },
+        {
+        id: "2",
         title: "Dash Roblox reedit 💪",
         date: "January 30, 2026",
         embedHtml: `
@@ -27,7 +35,7 @@ const posts: XPost[] = [
 `,
     },
       {
-        id: "2",
+        id: "3",
         title: "just a sneak peek of an edit Im working on",
         date: "January 26, 2026",
         embedHtml: `
@@ -35,7 +43,7 @@ const posts: XPost[] = [
 `,
     },
     {
-        id: "3",
+        id: "4",
         title: "Built my first Video Editor Portfolio",
         date: "January 22, 2026",
         embedHtml: `
@@ -43,7 +51,7 @@ const posts: XPost[] = [
 `,
     },
     {
-        id: "4",
+        id: "5",
         title: "Made this intro for a client",
         date: "January 19, 2026",
         embedHtml: `
