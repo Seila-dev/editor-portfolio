@@ -3,6 +3,7 @@ import React, { useRef } from "react";
 import styled, { keyframes } from "styled-components";
 
 const shorts = [
+  { id: "2mZFa1Re_1w", title: "Is THIS the BEST Crosshair in Valorant?" },
   { id: "GWwnWi2z5bc", title: "THIS ROBLOX GAME IS SCARIER THAN THE ORIGINAL" },
   { id: "xYLfinmv4pc", title: "There's NO ONE who wouldn't get scared by this!" },
   { id: "jzgCQKKUFNM", title: "Roblox Viral Short Video" },
