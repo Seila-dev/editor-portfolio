@@ -8,56 +8,64 @@ import xIcon from "../../assets/x.avif";
    TYPES
 ======================= */
 type XPost = {
-    id: string;
-    title: string;
-    date: string;
-    embedHtml: string;
+  id: string;
+  title: string;
+  date: string;
+  embedHtml: string;
 };
 
 /* =======================
    DATA
 ======================= */
 const posts: XPost[] = [
-          {
-        id: "1",
-        title: "Trial for @WarOnRoot - A fast-paced Roblox short-form edit focused on retention",
-        date: "February 2, 2026",
-        embedHtml: `
+    {
+    id: "1",
+    title: "Valorant short-form editing trial for @TheZikzip - Fast-paced & high-retention edits",
+    date: "February 4, 2026",
+    embedHtml: `
+<blockquote class="twitter-tweet" data-theme="dark"><p lang="en" dir="ltr">Valorant short-form editing trial for <a href="https://twitter.com/TheZikzip?ref_src=twsrc%5Etfw">@TheZikzip</a><br><br>Fast-paced &amp; high-retention edits<br>Want something like this? DM me <a href="https://t.co/9Tj5zF4xW8">pic.twitter.com/9Tj5zF4xW8</a></p>&mdash; Async | Video Editor (@AsyncEditor) <a href="https://twitter.com/AsyncEditor/status/2019110974666764482?ref_src=twsrc%5Etfw">February 4, 2026</a></blockquote> 
+`,
+  },
+  {
+    id: "2",
+    title: "2:24 A.M - editors and their terrible night routines",
+    date: "February 4, 2026",
+    embedHtml: `
+<blockquote class="twitter-tweet" data-theme="dark"><p lang="en" dir="ltr">2:24 A.M<br><br>editors and their terrible night routines <a href="https://t.co/UqHOGfI00l">pic.twitter.com/UqHOGfI00l</a></p>&mdash; Async | Video Editor (@AsyncEditor) <a href="https://twitter.com/AsyncEditor/status/2018948735695220996?ref_src=twsrc%5Etfw">February 4, 2026</a></blockquote>
+`,
+  },
+  {
+    id: "3",
+    title: "Trial for @WarOnRoot - A fast-paced Roblox short-form edit focused on retention",
+    date: "February 2, 2026",
+    embedHtml: `
         <blockquote class="twitter-tweet" data-theme="dark"><p lang="en" dir="ltr">Trial for <a href="https://twitter.com/WarOnRoot?ref_src=twsrc%5Etfw">@WarOnRoot</a> - a fast-paced Roblox short-form edit focused on retention<br><br>Want this style on your channel?<br>Feel free to DM me for a trial 💪 <a href="https://t.co/anIlwTTZRJ">pic.twitter.com/anIlwTTZRJ</a></p>&mdash; Async | Video Editor (@AsyncEditor) <a href="https://twitter.com/AsyncEditor/status/2018121485538185486?ref_src=twsrc%5Etfw">February 2, 2026</a></blockquote>
 `,
-    },
-        {
-        id: "2",
-        title: "Dash Roblox reedit 💪",
-        date: "January 30, 2026",
-        embedHtml: `
+  },
+  {
+    id: "4",
+    title: "Dash Roblox reedit 💪",
+    date: "January 30, 2026",
+    embedHtml: `
         <blockquote class="twitter-tweet" data-theme="dark"><p lang="en" dir="ltr">Dash Roblox reedit 💪<br><br>learned more about zooms, SFX, and VFX while making this edit tho <a href="https://t.co/7ug5eZCCV6">pic.twitter.com/7ug5eZCCV6</a></p>&mdash; Async | Video Editor (@AsyncEditor) <a href="https://twitter.com/AsyncEditor/status/2017307000271511883?ref_src=twsrc%5Etfw">January 30, 2026</a></blockquote>
 `,
-    },
-      {
-        id: "3",
-        title: "just a sneak peek of an edit Im working on",
-        date: "January 26, 2026",
-        embedHtml: `
+  },
+  {
+    id: "5",
+    title: "just a sneak peek of an edit Im working on",
+    date: "January 26, 2026",
+    embedHtml: `
         <blockquote class="twitter-tweet" data-theme="dark"><p lang="en" dir="ltr">just a sneak peek of an edit Im working on<a href="https://twitter.com/hashtag/dash?src=hash&amp;ref_src=twsrc%5Etfw">#dash</a> <a href="https://twitter.com/hashtag/edit?src=hash&amp;ref_src=twsrc%5Etfw">#edit</a> <a href="https://twitter.com/hashtag/roblox?src=hash&amp;ref_src=twsrc%5Etfw">#roblox</a> <a href="https://t.co/1rZi3j81d6">pic.twitter.com/1rZi3j81d6</a></p>&mdash; Async | Video Editor (@AsyncEditor) <a href="https://twitter.com/AsyncEditor/status/2015961884294316161?ref_src=twsrc%5Etfw">January 27, 2026</a></blockquote>
 `,
-    },
-    {
-        id: "4",
-        title: "Built my first Video Editor Portfolio",
-        date: "January 22, 2026",
-        embedHtml: `
-<blockquote class="twitter-tweet" data-theme="dark"><p lang="en" dir="ltr">Built my first Video Editor Portfolio 💪<a href="https://t.co/tRWwqZp1sR">https://t.co/tRWwqZp1sR</a><br><br>Not perfect yet, but evolving with every edit.<br>Improvement is part of the process<br><br>Consistency is everything. <a href="https://t.co/ojgTKVwziN">pic.twitter.com/ojgTKVwziN</a></p>&mdash; Async | Video Editor (@AsyncEditor) <a href="https://twitter.com/AsyncEditor/status/2014457734230348007?ref_src=twsrc%5Etfw">January 22, 2026</a></blockquote>
-`,
-    },
-    {
-        id: "5",
-        title: "Made this intro for a client",
-        date: "January 19, 2026",
-        embedHtml: `
+  },
+  {
+    id: "6",
+    title: "Made this intro for a client",
+    date: "January 19, 2026",
+    embedHtml: `
     <blockquote class="twitter-tweet" data-theme="dark"><p lang="en" dir="ltr">Made this intro for a client<br><br>Want this editing style on your channel?<br>DM me for a free trial 💪 <a href="https://t.co/gmsur9fSV3">pic.twitter.com/gmsur9fSV3</a></p>&mdash; Async | Video Editor (@AsyncEditor) <a href="https://twitter.com/AsyncEditor/status/2013067195543179617?ref_src=twsrc%5Etfw">January 19, 2026</a></blockquote>
 `,
-    }
+  }
 ];
 
 /* =======================
@@ -120,36 +128,36 @@ const XPostsSection = () => {
 
   return (
     <Section id="x">
-    <Layout>
-  <Left>
-    <Header>
-      <Title>Building in Public</Title>
-      <Subtitle>My journey as a Gaming Video Editor on X</Subtitle>
-    </Header>
+      <Layout>
+        <Left>
+          <Header>
+            <Title>Building in Public</Title>
+            <Subtitle>My journey as a Gaming Video Editor on X</Subtitle>
+          </Header>
 
-    <Sidebar>
-      <SidebarTitle>Recent posts on <ImageX src={xIcon} alt="" /></SidebarTitle>
+          <Sidebar>
+            <SidebarTitle>Recent posts on <ImageX src={xIcon} alt="" /></SidebarTitle>
 
-      {posts.map(post => (
-        <PostItem
-          key={post.id}
-          isActive={currentPost.id === post.id}
-          onClick={() => setCurrentPost(post)}
-        >
-          <ItemTitle>{post.title}</ItemTitle>
-          <ItemDate>{post.date}</ItemDate>
-        </PostItem>
-      ))}
-    </Sidebar>
-  </Left>
+            {posts.map(post => (
+              <PostItem
+                key={post.id}
+                isActive={currentPost.id === post.id}
+                onClick={() => setCurrentPost(post)}
+              >
+                <ItemTitle>{post.title}</ItemTitle>
+                <ItemDate>{post.date}</ItemDate>
+              </PostItem>
+            ))}
+          </Sidebar>
+        </Left>
 
-  <Right>
-    <TwitterEmbed
-      key={currentPost.id}
-      html={currentPost.embedHtml}
-    />
-  </Right>
-</Layout>
+        <Right>
+          <TwitterEmbed
+            key={currentPost.id}
+            html={currentPost.embedHtml}
+          />
+        </Right>
+      </Layout>
     </Section>
   );
 };
