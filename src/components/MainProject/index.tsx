@@ -32,7 +32,6 @@ const content = {
 
 const videos = [
   { id: "YjFXvQrfL8Q", title: "Client Long-form Intro" },
-  { id: "NdljsEQqfFc", title: "Dash re-edit" },
   { id: "qW6ZUokrC8M", title: "Roblox Gameplay Footage #2" },
   { id: "K2nubbiNrYk", title: "Roblox Intro Trial" },
   { id: "l508d1BcUI0", title: "AMV/EDIT - Fyodor Dostoyevesky" },
