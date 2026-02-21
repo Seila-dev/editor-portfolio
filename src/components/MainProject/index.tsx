@@ -20,10 +20,10 @@ import ytIcon from "../../assets/youtube.png";
 
 const content = {
   id: "1",
-  title: "Editing Highlights",
+  title: "Long-form Videos",
   coverImage: cover,
   description:
-    "A selection of my horizontal edits (16:9), with a strong focus on Roblox content. At the moment, this includes two Roblox clips and one AMV, highlighting my approach to pacing, transitions, color grading, and sound design. More projects are in production and will be added as I continue to expand my editing work.",
+    "A selection of my horizontal edits (16:9), with a strong focus on Gaming content. Highlighting my approach to pacing, transitions, color grading, and sound design. More projects are in production and will be added as I continue to expand my editing work.",
   note: "Curated selection of my best edits.",
   startDate: "2025-02",
   finishDate: "Present",
@@ -31,6 +31,7 @@ const content = {
 };
 
 const videos = [
+  { id: "YjFXvQrfL8Q", title: "Client Long-form Intro" },
   { id: "NdljsEQqfFc", title: "Dash re-edit" },
   { id: "qW6ZUokrC8M", title: "Roblox Gameplay Footage #2" },
   { id: "K2nubbiNrYk", title: "Roblox Intro Trial" },
