@@ -20,18 +20,18 @@ type XPost = {
 const posts: XPost[] = [
     {
     id: "1",
+    title: "first minute of a video I edited for a client",
+    date: "February 26, 2026",
+    embedHtml: `
+      <blockquote class="twitter-tweet" data-theme="dark"><p lang="en" dir="ltr">first minute of a video I edited for a client<br><br>looking for a Video editor? Shoot me a DM! 💪 <a href="https://t.co/gJuNp3UnEy">pic.twitter.com/gJuNp3UnEy</a></p>&mdash; Async | Video Editor (@AsyncEditor) <a href="https://twitter.com/AsyncEditor/status/2027015812683382861?ref_src=twsrc%5Etfw">February 26, 2026</a></blockquote>
+`,
+  },
+    {
+    id: "2",
     title: "Valorant short-form editing trial for @TheZikzip - Fast-paced & high-retention edits",
     date: "February 4, 2026",
     embedHtml: `
 <blockquote class="twitter-tweet" data-theme="dark"><p lang="en" dir="ltr">Valorant short-form editing trial for <a href="https://twitter.com/TheZikzip?ref_src=twsrc%5Etfw">@TheZikzip</a><br><br>Fast-paced &amp; high-retention edits<br>Want something like this? DM me <a href="https://t.co/9Tj5zF4xW8">pic.twitter.com/9Tj5zF4xW8</a></p>&mdash; Async | Video Editor (@AsyncEditor) <a href="https://twitter.com/AsyncEditor/status/2019110974666764482?ref_src=twsrc%5Etfw">February 4, 2026</a></blockquote> 
-`,
-  },
-  {
-    id: "2",
-    title: "2:24 A.M - editors and their terrible night routines",
-    date: "February 4, 2026",
-    embedHtml: `
-<blockquote class="twitter-tweet" data-theme="dark"><p lang="en" dir="ltr">2:24 A.M<br><br>editors and their terrible night routines <a href="https://t.co/UqHOGfI00l">pic.twitter.com/UqHOGfI00l</a></p>&mdash; Async | Video Editor (@AsyncEditor) <a href="https://twitter.com/AsyncEditor/status/2018948735695220996?ref_src=twsrc%5Etfw">February 4, 2026</a></blockquote>
 `,
   },
   {
@@ -44,22 +44,6 @@ const posts: XPost[] = [
   },
   {
     id: "4",
-    title: "Dash Roblox reedit 💪",
-    date: "January 30, 2026",
-    embedHtml: `
-        <blockquote class="twitter-tweet" data-theme="dark"><p lang="en" dir="ltr">Dash Roblox reedit 💪<br><br>learned more about zooms, SFX, and VFX while making this edit tho <a href="https://t.co/7ug5eZCCV6">pic.twitter.com/7ug5eZCCV6</a></p>&mdash; Async | Video Editor (@AsyncEditor) <a href="https://twitter.com/AsyncEditor/status/2017307000271511883?ref_src=twsrc%5Etfw">January 30, 2026</a></blockquote>
-`,
-  },
-  {
-    id: "5",
-    title: "just a sneak peek of an edit Im working on",
-    date: "January 26, 2026",
-    embedHtml: `
-        <blockquote class="twitter-tweet" data-theme="dark"><p lang="en" dir="ltr">just a sneak peek of an edit Im working on<a href="https://twitter.com/hashtag/dash?src=hash&amp;ref_src=twsrc%5Etfw">#dash</a> <a href="https://twitter.com/hashtag/edit?src=hash&amp;ref_src=twsrc%5Etfw">#edit</a> <a href="https://twitter.com/hashtag/roblox?src=hash&amp;ref_src=twsrc%5Etfw">#roblox</a> <a href="https://t.co/1rZi3j81d6">pic.twitter.com/1rZi3j81d6</a></p>&mdash; Async | Video Editor (@AsyncEditor) <a href="https://twitter.com/AsyncEditor/status/2015961884294316161?ref_src=twsrc%5Etfw">January 27, 2026</a></blockquote>
-`,
-  },
-  {
-    id: "6",
     title: "Made this intro for a client",
     date: "January 19, 2026",
     embedHtml: `
@@ -131,8 +115,8 @@ const XPostsSection = () => {
       <Layout>
         <Left>
           <Header>
-            <Title>Building in Public</Title>
-            <Subtitle>My journey as a Gaming Video Editor on X</Subtitle>
+            <Title>Twitter Highlights</Title>
+            <Subtitle>My journey as a Video Editor on X</Subtitle>
           </Header>
 
           <Sidebar>
