@@ -1,81 +1,63 @@
-import React, { useRef } from "react";
+import { useState } from "react";
 import styled from "styled-components";
-// import { Code2 } from "lucide-react";
-// import Star from '../../assets/stars.png'
-// import UnfilledStar from '../../assets/unfilledstars.png'
 import cover from "../../assets/Sukuna-wallpaper.jpg";
 import ytIcon from "../../assets/youtube.png";
-// (se quiser manter imagens para background blur use a mesma cover)
-// import ComingSoon from "../../assets/comingsoon.png";
 
-/**
- * Video Section - versão para vídeos horizontais (16:9)
- *
- * Observações importantes:
- * - Use IDs de vídeo do YouTube (ex: 'dQw4w9WgXcQ').
- * - O embed usa youtube-nocookie.com e params modestbranding=1, rel=0, iv_load_policy=3
- *   para reduzir elementos extras, mas não é possível remover tudo via embed (share / subscribe
- *   podem ainda aparecer em alguns casos).
- */
+const shorts = [
+  { id: "2mZFa1Re_1w", title: "Is THIS the BEST Crosshair in Valorant?" },
+  { id: "GWwnWi2z5bc", title: "THIS ROBLOX GAME IS SCARIER THAN THE ORIGINAL" },
+  { id: "xYLfinmv4pc", title: "There's NO ONE who wouldn't get scared by this!" },
+];
 
 const content = {
   id: "1",
-  title: "Long-form Videos",
+  title: "Short-form Videos",
   coverImage: cover,
   description:
-    "A selection of my horizontal edits (16:9), with a strong focus on Webcam and Entertainment content. Highlighting my approach to pacing, transitions, color grading, and sound design. More projects are in production and will be added as I continue to expand my editing work.",
+    "A selection of my short-form edits focused on high-retention pacing, dynamic transitions, and engaging visual flow. These edits are designed to maximize viewer attention and performance across platforms like YouTube Shorts, TikTok, and Reels.",
   note: "Curated selection of my best edits.",
   startDate: "2025-02",
   finishDate: "Present",
   channelLink: "https://www.youtube.com/@AsyncEditor"
 };
 
-const videos = [
-  { id: "wZ821Jh7dks", title: "Client Long-form Intro" },
-  { id: "63PJ4r53nCk", title: "Client Full Long-form Video " },
-  { id: "qW6ZUokrC8M", title: "Roblox Footage Trial #2" },
-  { id: "K2nubbiNrYk", title: "Roblox Intro Trial" },
-  { id: "l508d1BcUI0", title: "AMV/EDIT - Fyodor Dostoyevesky" },
-];
+/* SHORTS */
+// const shorts = [
+//   { id: "UQoCV_ZJMoE", title: "ItsPoachie Trial" },
+//   { id: "wZ821Jh7dks", title: "Client Long-form Intro" },
+//   { id: "63PJ4r53nCk", title: "Client Full Long-form Video" },
+//   { id: "qW6ZUokrC8M", title: "Roblox Footage Trial #2" },
+//   { id: "K2nubbiNrYk", title: "Roblox Intro Trial" },
+//   { id: "l508d1BcUI0", title: "AMV/EDIT - Fyodor Dostoyevesky" },
+// ];
 
 export default function VideoSection() {
   return (
     <Section>
       <BackgroundBlur bg={content.coverImage || ""} />
+
       <Container>
         <Content>
-          {content.finishDate && (
-            <Status>
-              <span>In Production</span>
-            </Status>
-          )}
+          <Status>
+            <span>In Production</span>
+          </Status>
 
           <Header>
             <h1>{content.title}</h1>
           </Header>
 
-          {content.description && <Description>{content.description}</Description>}
-          {/* 
-          <Stars>
-            {Array.from({ length: 5 }, (_, i) => (
-              <StarImg
-                key={i}
-                src={i < content.rating ? Star : UnfilledStar}
-                alt={i < content.rating ? "Filled star" : "Unfilled star"}
-              />
-            ))}
-          </Stars> */}
+          <Description>{content.description}</Description>
 
           <ActionMethods>
-            <a href={content.channelLink} className="links" target="_blank" rel="noopener noreferrer">
+            <a
+              href={content.channelLink}
+              className="links"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <img src={ytIcon} alt="Youtube icon" />
               AsyncEditor
             </a>
-
-            {/* <DisabledButton className="links disabled">
-              <Code2 size={18} />
-              No repo
-            </DisabledButton> */}
           </ActionMethods>
 
           <Footer>
@@ -84,119 +66,178 @@ export default function VideoSection() {
         </Content>
 
         <Content>
-          <VideoCarousel videos={videos} />
+          <VideoCarousel videos={shorts} />
         </Content>
       </Container>
     </Section>
   );
 }
 
-/* ----------------------
-   VideoCarousel Component
-   arrows + drag + horizontal 16:9 embeds
-   ---------------------- */
+/* ===============================
+   CAROUSEL
+================================ */
+
 function VideoCarousel({ videos }: { videos: { id: string; title: string }[] }) {
-  const carouselRef = useRef<HTMLDivElement | null>(null);
+  const [active, setActive] = useState(0);
 
-  // refs para estado de drag (persistente entre renders)
-  const isDown = useRef(false);
-  const startX = useRef(0);
-  const scrollLeft = useRef(0);
-
-  const handleScrollBy = (direction: "left" | "right") => {
-    if (!carouselRef.current) return;
-    const cardWidth = 400; // largura aproximada do card + gap
-    carouselRef.current.scrollBy({
-      left: direction === "left" ? -cardWidth : cardWidth,
-      behavior: "smooth",
-    });
+  const prev = () => {
+    setActive((p) => (p - 1 + videos.length) % videos.length);
   };
 
-  const onMouseDown = (e: React.MouseEvent) => {
-    if (!carouselRef.current) return;
-    isDown.current = true;
-    startX.current = e.pageX - carouselRef.current.offsetLeft;
-    scrollLeft.current = carouselRef.current.scrollLeft;
+  const next = () => {
+    setActive((p) => (p + 1) % videos.length);
   };
 
-  const stopDrag = () => {
-    isDown.current = false;
-  };
+  const getOffset = (index: number) => {
+    const length = videos.length;
+    const diff = index - active;
 
-  const onMouseMove = (e: React.MouseEvent) => {
-    if (!isDown.current || !carouselRef.current) return;
-    e.preventDefault();
-    const x = e.pageX - carouselRef.current.offsetLeft;
-    const walk = (x - startX.current) * 1.3; // sensibilidade
-    carouselRef.current.scrollLeft = scrollLeft.current - walk;
+    if (diff > length / 2) return diff - length;
+    if (diff < -length / 2) return diff + length;
+
+    return diff;
   };
 
   return (
-  <CarouselOuter>
-    <Carousel
-      ref={carouselRef}
-      onMouseDown={onMouseDown}
-      onMouseUp={stopDrag}
-      onMouseLeave={stopDrag}
-      onMouseMove={onMouseMove}
-    >
-      {videos.map((v, idx) => (
-        <VideoCard key={`${v.id}-${idx}`}>
-          <div className="video-wrap">
-            <iframe
-              src={`https://www.youtube-nocookie.com/embed/${v.id}?modestbranding=1&rel=0&iv_load_policy=3&showinfo=0`}
-              title={v.title}
-              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-          </div>
-          <div className="meta">
-            <h3>{v.title}</h3>
-          </div>
-        </VideoCard>
-      ))}
-    </Carousel>
+    <CarouselOuter>
+      <CarouselViewport>
+        {videos.map((video, index) => {
+          const offset = getOffset(index);
 
-    {/* OVERLAY */}
-    <ArrowOverlay>
-      <ArrowButton
-        position="left"
-        aria-label="Scroll left"
-        onClick={() => handleScrollBy("left")}
-      >
+          return (
+            <ShortCard key={video.id} offset={offset}>
+<iframe
+  src={`https://www.youtube-nocookie.com/embed/${video.id}?controls=0&modestbranding=1&rel=0&iv_load_policy=3`}
+  title={video.title}
+  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+  allowFullScreen
+/>
+            </ShortCard>
+          );
+        })}
+      </CarouselViewport>
+
+      <ArrowButton position="left" onClick={prev}>
         <ChevronLeftIcon />
       </ArrowButton>
 
-      <ArrowButton
-        position="right"
-        aria-label="Scroll right"
-        onClick={() => handleScrollBy("right")}
-      >
+      <ArrowButton position="right" onClick={next}>
         <ChevronRightIcon />
       </ArrowButton>
-    </ArrowOverlay>
-  </CarouselOuter>
-);
+    </CarouselOuter>
+  );
 }
 
-/* ----------------------
-   Styled components (espelhando seu estilo)
-   ---------------------- */
-
-   const CarouselOuter = styled.div`
+/* ===============================
+   STYLES
+================================ */
+const CarouselOuter = styled.div`
   position: relative;
-  display: flex;
-  justify-content: space-between;
   width: 100%;
+  margin-top: 0px;
 `;
 
-const ArrowOverlay = styled.div`
+const CarouselViewport = styled.div`
+  position: relative;
+  width: 100%;
+
+  height: clamp(500px, 80vh, 720px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  perspective: 1600px;
+  overflow: hidden;
+
+
+  @media (max-width: 768px) {
+  height: 80vh;
+}
+
+@media (max-width: 480px) {
+  height: 800px;
+}
+`;
+
+const ShortCard = styled.div<{ offset: number }>`
   position: absolute;
-  inset: 0;
-  pointer-events: none; /* deixa o drag funcionar */
+
+  width: ${({ offset }) => (offset === 0 ? "min(360px, 80vw)" : "min(220px, 60vw)")};
+  aspect-ratio: 9 / 16;
+
+  border-radius: 18px;
+  overflow: hidden;
+  background: #000;
+
+  transition: all 0.6s cubic-bezier(.22,.61,.36,1);
+
+  transform: ${({ offset }) =>
+    `translateX(${offset * 220}px) scale(${offset === 0 ? 1 : 0.75})`};
+
+  opacity: ${({ offset }) => (offset === 0 ? 1 : 0.45)};
+
+  z-index: ${({ offset }) => 10 - Math.abs(offset)};
+
+  filter: ${({ offset }) => (offset === 0 ? "none" : "blur(3px)")};
+
+  pointer-events: ${({ offset }) => (offset === 0 ? "auto" : "none")};
+
+  box-shadow: ${({ offset }) =>
+    offset === 0
+      ? "0 40px 100px rgba(0,0,0,0.9)"
+      : "0 20px 40px rgba(0,0,0,0.4)"};
+
+  iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+`;
+const ArrowButton = styled.button<{ position: "left" | "right" }>`
+  position: absolute;
+  top: 0;
+  ${({ position }) => (position === "left" ? "left: 0;" : "right: 0;")}
+
+  width: 120px;
+  height: 100%;
+
+  border: none;
+  background: transparent;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
   z-index: 10;
+
+  transition: background .25s;
+
+  svg{
+    width:48px;
+    height:48px;
+  }
+
+
+  @media (max-width:768px){
+    width:80px;
+  }
 `;
 
+const ChevronLeftIcon = () => (
+  <svg viewBox="0 0 24 24" width="22" height="22">
+    <path d="M15 18l-6-6 6-6" stroke="white" strokeWidth="2" fill="none"/>
+  </svg>
+);
+
+const ChevronRightIcon = () => (
+  <svg viewBox="0 0 24 24" width="22" height="22">
+    <path d="M9 18l6-6-6-6" stroke="white" strokeWidth="2" fill="none"/>
+  </svg>
+);
+
+/* layout */
 
 const Section = styled.section`
   position: relative;
@@ -278,30 +319,18 @@ const BackgroundBlur = styled.div<{ bg?: string }>`
 `;
 
 const Container = styled.div`
-  position: relative;
-  z-index: 0;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  gap: 2rem;
+  gap: 3rem;
+  z-index: 0;
+  position: relative;
 
-  @media (min-width: 1024px) {
-    flex-direction: row;
-    gap: 3rem;
+  @media(max-width: 1200px){
+    flex-direction: column;
   }
 `;
 
 const Content = styled.div`
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-
-  @media (min-width: 1024px) {
-    width: 50%;
-  }
 `;
 
 const Header = styled.div`
@@ -331,7 +360,6 @@ const Header = styled.div`
     }
   }
 `;
-
 const Status = styled.div`
   display: flex;
   align-items: center;
@@ -352,7 +380,7 @@ const Description = styled.p`
   color: #d1d5db;
   margin-bottom: 1.5rem;
   line-height: 1.6;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   max-width: 42rem;
 `;
 
@@ -379,6 +407,7 @@ const ActionMethods = styled.div`
     background: #e200000a;
     border: 1px solid gray;
     color: #fff;
+    text-decoration: none;
     width: 100%;
     gap: 8px;
     max-width: fit-content;
@@ -391,7 +420,7 @@ const ActionMethods = styled.div`
     margin: 10px 0;
     cursor: pointer;
     animation: fade-up 0.5s 0.4s backwards;
-    transition: 0.35s ease-in;
+    transition: 0.2s ease-in;
     &:hover {
       background: #d60000;
       border-color: #d60000;
@@ -417,171 +446,3 @@ const ActionMethods = styled.div`
     flex-direction: column;
   }
 `;
-
-// const Stars = styled.div`
-//   font-size: 1rem;
-//   color: #ffcc00;
-//   margin-bottom: 8px;
-// `;
-
-// const StarImg = styled.img`
-//   width: 25px;
-//   height: 25px;
-//   margin-right: 4px;
-// `;
-
-// const DisabledButton = styled.span`
-//   display: inline-flex;
-//   align-items: center;
-//   padding: 8px 12px;
-//   background: #2e2e2e;
-//   color: #999;
-//   gap: 10px;
-//   border-radius: 0.375rem;
-//   font-weight: 500;
-//   font-size: 14px;
-//   opacity: 0.7;
-//   cursor: not-allowed;
-//   text-decoration: none;
-// `;
-
-/* ----------------------
-   Carousel styled (horizontal videos)
-   ---------------------- */
-
-// const CarouselWrapper = styled.div`
-//   display: flex;
-//   align-items: center;
-//   position: relative;
-//   gap: 12px;
-//   width: 100%;
-//   padding: 0 52px; /* espaço pras arrows */
-// `;
-
-const Carousel = styled.div`
-  display: flex;
-  gap: 20px;
-  overflow-x: auto;
-  padding: 8px;
-  scroll-behavior: smooth;
-  cursor: grab;
-  width: 100%;
-
-  /* Chrome, Safari, Edge */
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  /* Firefox */
-  scrollbar-width: none;
-
-  &:active {
-    cursor: grabbing;
-  }
-`;
-
-const VideoCard = styled.div`
-  flex: 0 0 auto;
-  width: 420px; /* card width for desktop */
-  border-radius: 12px;
-  overflow: hidden;
-  background: #000;
-  box-shadow: 0 18px 36px rgba(0,0,0,0.45);
-  transition: transform 0.24s ease;
-
-  .video-wrap {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    background: #000;
-  }
-
-  iframe {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
-  }
-
-  .meta {
-    padding: 12px 14px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
-    h3 {
-      margin: 0;
-      font-size: 14px;
-      color: #e6e6e6;
-      font-weight: 600;
-    }
-  }
-
-  &:hover {
-    transform: translateY(-6px);
-  }
-
-  @media (max-width: 1024px) {
-    width: 360px;
-  }
-
-  @media (max-width: 768px) {
-    width: 300px;
-  }
-`;
-
-const ArrowButton = styled.button<{ position: "left" | "right" }>`
-  pointer-events: auto;
-  position: absolute;
-  top: 50%;
-  ${({ position }) =>
-    position === "left" ? "left: 0;" : "right: 0;"}
-  transform: translateY(-50%);
-
-  width: 64px;
-  height: 100%;
-
-  background: linear-gradient(
-    ${({ position }) =>
-      position === "left"
-        ? "to right, rgba(0,0,0,0.75), rgba(0,0,0,0)"
-        : "to left, rgba(0,0,0,0.75), rgba(0,0,0,0)"}
-  );
-
-  border: none;
-  color: white;
-  cursor: pointer;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  opacity: 0;
-  transition: opacity 0.25s ease;
-
-  svg {
-    width: 28px;
-    height: 28px;
-  }
-
-  ${CarouselOuter}:hover & {
-    opacity: 1;
-  }
-
-  @media (max-width: 768px) {
-    display: none;
-  }
-`;
-
-
-/* Simple chevrons using CSS (keeps dependency-free if lucide not desired) */
-const ChevronLeftIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
-    <path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-const ChevronRightIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
-    <path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-

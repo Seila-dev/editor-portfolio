@@ -1,8 +1,9 @@
 import styled, { keyframes } from "styled-components";
-import { ShortsCarousel } from "../ProjectsCarousel";
+import { LongFormVideos } from "../ProjectsCarousel";
 import VideoSection from "../MainProject";
 import shortsBg from "../../assets/kokushibo-hd.jpg";
 import shortsMobileBg from "../../assets/lua-sangrenta-3.jfif";
+import HighlightSection from "../HighlightSection";
 
 const Projects = () => {
 
@@ -13,13 +14,22 @@ const Projects = () => {
           <VideoSection />
         </Content>
       </Section>
+      <HighlightSection />
       <OtherProjectsSection id="shorts">
-        <Header>
-          <Title>Shorts Videos</Title>
-          <Subtitle>This section features my short-form video edits, created for quick and engaging vertical content. These projects focus on sharp cuts, strong pacing, and sound design to deliver maximum impact in a short timeframe. More shorts are currently in production and will be added regularly.</Subtitle>
-        </Header>
-        <ShortsCarousel />
-      </OtherProjectsSection>
+
+
+
+  <Header style={{ marginTop: "120px" }}>
+    <Title>Long-form Videos</Title>
+    <Subtitle>
+      Full-length YouTube edits and client projects focused on storytelling,
+      pacing, and immersive editing. These videos highlight more complex
+      structures, transitions, and narrative flow.
+    </Subtitle>
+  </Header>
+
+  <LongFormVideos />
+</OtherProjectsSection>
     </div>
   );
 };
@@ -43,9 +53,7 @@ const Section = styled.section`
 const Content = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   width: 100%;
-  margin: 0 auto;
 `;
 
 const OtherProjectsSection = styled.div`
@@ -54,7 +62,7 @@ const OtherProjectsSection = styled.div`
   min-height: 100vh;
   padding: 100px 150px;
   overflow: hidden;
-      background-image: url(${shortsBg});
+      background-image: url(${shortsMobileBg});
       background-position: right;
     background-size: cover;
     background-repeat: no-repeat;
@@ -128,27 +136,26 @@ const OtherProjectsSection = styled.div`
 `;
 
 const Header = styled.div`
-    // margin-bottom: 00px;
-    animation: ${fadeIn} 0.8s ease-out;
+  margin-bottom: 48px;
+  animation: ${fadeIn} 0.8s ease-out;
 `;
 
 const Title = styled.h2`
-    font-size: 48px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    background: var(--white);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
 
-    @media (max-width: 768px) {
-      font-size: 2rem;
+    @media (min-width: 1024px) {
+      font-size: 3rem;
     }
 `;
 
 const Subtitle = styled.p`
   color: #d1d5db;
+  margin-bottom: 1.5rem;
   line-height: 1.6;
-  font-size: 1.1rem;
-  max-width: 42rem; 
+  font-size: 1.2rem;
+  max-width: 42rem;
 `;
