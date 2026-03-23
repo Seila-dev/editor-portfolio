@@ -1,7 +1,7 @@
 import styled, { keyframes } from "styled-components";
 
 const highlightVideo = {
-  id: "UQoCV_ZJMoE",
+  id: "XH6XcV_SClI",
   title: "Featured Edit of the Month",
   description:
     "A highlighted long-form project showcasing advanced pacing, cinematic transitions, and immersive storytelling. This edit represents the current peak of my editing style and production quality"

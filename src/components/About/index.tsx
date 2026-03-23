@@ -1,428 +1,303 @@
-
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled, { keyframes } from "styled-components";
-import image from "../../assets/tanjiro.png";
-import xIcon from "../../assets/x.avif";
 
 /* =======================
    TYPES
 ======================= */
-type XPost = {
+type Client = {
   id: string;
-  title: string;
-  date: string;
-  embedHtml: string;
+  name: string;
+  avatar: string;
+  subscribers: string;
+  description: string;
+  banner: string;
 };
 
 /* =======================
    DATA
 ======================= */
-const posts: XPost[] = [
-    {
+const clients: Client[] = [
+  {
     id: "1",
-    title: "first minute of a video I edited for a client",
-    date: "February 26, 2026",
-    embedHtml: `
-      <blockquote class="twitter-tweet" data-theme="dark"><p lang="en" dir="ltr">first minute of a video I edited for a client<br><br>looking for a Video editor? Shoot me a DM! 💪 <a href="https://t.co/gJuNp3UnEy">pic.twitter.com/gJuNp3UnEy</a></p>&mdash; Async | Video Editor (@AsyncEditor) <a href="https://twitter.com/AsyncEditor/status/2027015812683382861?ref_src=twsrc%5Etfw">February 26, 2026</a></blockquote>
-`,
+    name: "TheZikzip",
+    avatar: "/clients/zikzip.jpg",
+    banner: "/clients/zikzip-banner.jpg",
+    subscribers: "120K subscribers",
+    description: "Valorant creator focused on high-retention short form edits."
   },
-    {
+  {
     id: "2",
-    title: "Valorant short-form editing trial for @TheZikzip - Fast-paced & high-retention edits",
-    date: "February 4, 2026",
-    embedHtml: `
-<blockquote class="twitter-tweet" data-theme="dark"><p lang="en" dir="ltr">Valorant short-form editing trial for <a href="https://twitter.com/TheZikzip?ref_src=twsrc%5Etfw">@TheZikzip</a><br><br>Fast-paced &amp; high-retention edits<br>Want something like this? DM me <a href="https://t.co/9Tj5zF4xW8">pic.twitter.com/9Tj5zF4xW8</a></p>&mdash; Async | Video Editor (@AsyncEditor) <a href="https://twitter.com/AsyncEditor/status/2019110974666764482?ref_src=twsrc%5Etfw">February 4, 2026</a></blockquote> 
-`,
+    name: "WarOnRoot",
+    avatar: "/clients/root.jpg",
+    banner: "/clients/root-banner.jpg",
+    subscribers: "85K subscribers",
+    description: "Roblox content creator focused on fast paced content."
   },
   {
     id: "3",
-    title: "Trial for @WarOnRoot - A fast-paced Roblox short-form edit focused on retention",
-    date: "February 2, 2026",
-    embedHtml: `
-        <blockquote class="twitter-tweet" data-theme="dark"><p lang="en" dir="ltr">Trial for <a href="https://twitter.com/WarOnRoot?ref_src=twsrc%5Etfw">@WarOnRoot</a> - a fast-paced Roblox short-form edit focused on retention<br><br>Want this style on your channel?<br>Feel free to DM me for a trial 💪 <a href="https://t.co/anIlwTTZRJ">pic.twitter.com/anIlwTTZRJ</a></p>&mdash; Async | Video Editor (@AsyncEditor) <a href="https://twitter.com/AsyncEditor/status/2018121485538185486?ref_src=twsrc%5Etfw">February 2, 2026</a></blockquote>
-`,
-  },
-  {
-    id: "4",
-    title: "Made this intro for a client",
-    date: "January 19, 2026",
-    embedHtml: `
-    <blockquote class="twitter-tweet" data-theme="dark"><p lang="en" dir="ltr">Made this intro for a client<br><br>Want this editing style on your channel?<br>DM me for a free trial 💪 <a href="https://t.co/gmsur9fSV3">pic.twitter.com/gmsur9fSV3</a></p>&mdash; Async | Video Editor (@AsyncEditor) <a href="https://twitter.com/AsyncEditor/status/2013067195543179617?ref_src=twsrc%5Etfw">January 19, 2026</a></blockquote>
-`,
+    name: "ExampleCreator",
+    avatar: "/clients/example.jpg",
+    banner: "/clients/example-banner.jpg",
+    subscribers: "240K subscribers",
+    description: "Gaming creator focused on viral short form content."
   }
 ];
 
 /* =======================
-   TWITTER EMBED
-======================= */
-const TwitterEmbed = ({ html }: { html: string }) => {
-  const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    setReady(false);
-
-    if (!(window as any).twttr) {
-      const script = document.createElement("script");
-      script.src = "https://platform.twitter.com/widgets.js";
-      script.async = true;
-      document.body.appendChild(script);
-    }
-
-    const handleRendered = () => {
-      setReady(true);
-    };
-
-    (window as any).twttr?.events?.bind("rendered", handleRendered);
-    (window as any).twttr?.widgets?.load();
-
-    return () => {
-      (window as any).twttr?.events?.unbind("rendered", handleRendered);
-    };
-  }, [html]);
-
-  return (
-    <TweetSlot>
-      {!ready && (
-        <FakeTweet>
-          <FakeHeader>
-            <FakeAvatar />
-            <FakeLine w="120px" />
-          </FakeHeader>
-
-          <FakeLine w="90%" />
-          <FakeLine w="80%" />
-          <FakeLine w="60%" />
-
-          <FakeMedia />
-        </FakeTweet>
-      )}
-
-      <RealTweet ready={ready}>
-        <div dangerouslySetInnerHTML={{ __html: html }} />
-      </RealTweet>
-    </TweetSlot>
-  );
-};
-
-/* =======================
    COMPONENT
 ======================= */
-const XPostsSection = () => {
-  const [currentPost, setCurrentPost] = useState(posts[0]);
+const ClientsSection = () => {
+  const [currentClient, setCurrentClient] = useState(clients[0]);
 
   return (
-    <Section id="x">
+    <Section id="clients">
       <Layout>
+
         <Left>
           <Header>
-            <Title>Twitter Highlights</Title>
-            <Subtitle>My journey as a Video Editor on X</Subtitle>
+            <Title>My Clients</Title>
+            <Subtitle>
+              Creators I've worked with as a Video Editor
+            </Subtitle>
           </Header>
 
           <Sidebar>
-            <SidebarTitle>Recent posts on <ImageX src={xIcon} alt="" /></SidebarTitle>
 
-            {posts.map(post => (
-              <PostItem
-                key={post.id}
-                isActive={currentPost.id === post.id}
-                onClick={() => setCurrentPost(post)}
+            {clients.map(client => (
+              <ClientItem
+                key={client.id}
+                isActive={client.id === currentClient.id}
+                onClick={() => setCurrentClient(client)}
               >
-                <ItemTitle>{post.title}</ItemTitle>
-                <ItemDate>{post.date}</ItemDate>
-              </PostItem>
+
+                <ClientAvatar src={client.avatar} />
+
+                <ClientInfo>
+                  <ClientName>{client.name}</ClientName>
+                  <ClientSubs>{client.subscribers}</ClientSubs>
+                </ClientInfo>
+
+              </ClientItem>
             ))}
+
           </Sidebar>
         </Left>
 
         <Right>
-          <TwitterEmbed
-            key={currentPost.id}
-            html={currentPost.embedHtml}
-          />
+
+          <Preview>
+
+            <Banner src={currentClient.banner} />
+
+            <PreviewContent>
+
+              <PreviewAvatar src={currentClient.avatar} />
+
+              <PreviewText>
+                <PreviewName>{currentClient.name}</PreviewName>
+                <PreviewSubs>{currentClient.subscribers}</PreviewSubs>
+
+                <PreviewDescription>
+                  {currentClient.description}
+                </PreviewDescription>
+              </PreviewText>
+
+            </PreviewContent>
+
+          </Preview>
+
         </Right>
+
       </Layout>
     </Section>
   );
 };
 
-export default XPostsSection;
+export default ClientsSection;
 
 /* =======================
    ANIMATIONS
 ======================= */
+
 const fadeIn = keyframes`
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+from {opacity:0; transform:translateY(20px);}
+to {opacity:1; transform:translateY(0);}
 `;
 
 const slideIn = keyframes`
-  from { opacity: 0; transform: translateX(-20px); }
-  to { opacity: 1; transform: translateX(0); }
+from {opacity:0; transform:translateX(-20px);}
+to {opacity:1; transform:translateX(0);}
 `;
 
 /* =======================
    STYLES
 ======================= */
+
 const Section = styled.section`
-  position: relative;
-  min-height: 100vh;
-  padding: 150px 150px 60px;
-  color: white;
-  background: linear-gradient(to left, #030033, #000, transparent);
-  overflow: hidden;
-  display: flex;
+min-height:100vh;
+padding:150px 150px 60px;
+color:white;
 
-  &::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(to bottom, rgba(0,0,0,.9), transparent 80%),
-      url(${image});
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: left;
-    opacity: 0.6;
-    pointer-events: none;
-  }
+background:
+radial-gradient(circle at 20% 40%, rgba(255,0,0,0.25), transparent 40%),
+linear-gradient(to right,#000,#180000);
 
-  > * {
-    position: relative;
-    z-index: 0;
-  }
+display:flex;
+overflow:hidden;
 
-  @media (max-width: 1024px) {
-    padding: 120px 20px 40px;
-  }
+@media(max-width:1024px){
+padding:120px 20px 40px;
+}
 `;
 
 const Layout = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap: 100px;
-  width: 100%;
-  max-width: 1400px;
-  min-height: calc(100vh - 210px); /* desconta o padding */
-  align-items: center;
-  justify-items: center;
+display:grid;
+grid-template-columns:1fr 1.2fr;
+gap:100px;
+max-width:1400px;
+width:100%;
+margin:auto;
 
-  @media (max-width: 1440px) {
-    grid-template-columns: 1fr;
-    gap: 60px;
-  }
-    
+align-items:center;
+
+@media(max-width:1024px){
+grid-template-columns:1fr;
+gap:60px;
+}
 `;
 
 const Left = styled.div`
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-  justify-content: center;
+display:flex;
+flex-direction:column;
 `;
-
 
 const Right = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
+display:flex;
+justify-content:center;
 `;
 
-
 const Header = styled.div`
-  margin-bottom: 60px;
-  animation: ${fadeIn} 0.8s ease-out;
+margin-bottom:50px;
+animation:${fadeIn} .8s ease-out;
 `;
 
 const Title = styled.h2`
-  font-size: 48px;
-  font-weight: 700;
-  background: var(--primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+font-size:48px;
+font-weight:700;
 
-      @media (max-width: 768px) {
-      font-size: 2rem;
-    }
+background:linear-gradient(90deg,#ff2a2a,#ff7b00);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
 `;
 
 const Subtitle = styled.p`
-  color: #d1d5db;
-  line-height: 1.6;
-  font-size: 1.1rem;
-  max-width: 42rem; 
+color:#d1d5db;
+margin-top:10px;
 `;
 
-// const Content = styled.div`
-//   display: flex;
-//   flex-direction: row-reverse;
-//   gap: 80px;
-//   max-width: 1400px;
-
-//   @media (max-width: 1024px) {
-//     flex-direction: column;
-//   }
-// `;
-
-// const Main = styled.div`
-//   flex: 1.2;
-//   animation: ${slideIn} 0.8s ease-out 0.2s both;
-// `;
+/* SIDEBAR */
 
 const Sidebar = styled.div`
-  flex: 1;
-  animation: ${slideIn} 0.8s ease-out 0.4s both;
+animation:${slideIn} .8s ease-out .2s both;
 `;
 
+const ClientItem = styled.div<{isActive:boolean}>`
+display:flex;
+gap:14px;
+align-items:center;
 
-// const Embed = styled.div`
-//   margin: 20px 0 30px;
-//   transform: scale(0.88);
-//   transform-origin: top left;
-//   width: 113%;
+padding:18px;
 
-//   iframe {
-//     border-radius: 12px;
-//   }
-// `;
+border-left:2px solid ${({isActive}) =>
+isActive ? "#ff3c3c" : "rgba(255,0,0,.3)"};
 
-// const LazyWrapper = styled.div`
-//   min-height: 420px;
-// `;
+background:${({isActive}) =>
+isActive
+? "linear-gradient(135deg,rgba(255,0,0,.35),transparent)"
+: "transparent"};
 
-const SidebarTitle = styled.h4`
-  font-size: 22px;
-  margin-bottom: 20px;
-  color: white;
+cursor:pointer;
+transition:.3s;
+
+&:hover{
+border-color:#ff3c3c;
+}
 `;
 
-const PostItem = styled.div<{ isActive?: boolean }> `padding: 22px; border-left: 2px solid ${({ isActive }) => (isActive ? "var(--primary-light);" : "rgba(255, 0, 0, 0.3)")}; background: ${({ isActive }) => isActive ? "linear-gradient(135deg, rgb(120, 0, 0), transparent)" : "transparent"}; cursor: pointer; transition: 0.4s; &:hover { border-color: var(--primary-light); } ;`
-
-const ItemTitle = styled.h5`
-  font-size: 16px;
-  font-weight: 600;
-  color: white;
+const ClientAvatar = styled.img`
+width:46px;
+height:46px;
+border-radius:50%;
+object-fit:cover;
 `;
 
-const ItemDate = styled.span`
-  font-size: 12px;
-  color: #c9c9c9;
+const ClientInfo = styled.div`
+display:flex;
+flex-direction:column;
 `;
 
-
-// const Skeleton = styled.div`
-//   width: 100%;
-//   height: 420px;
-//   border-radius: 12px;
-//   background: linear-gradient(
-//     90deg,
-//     rgba(255,255,255,0.05) 25%,
-//     rgba(255,255,255,0.12) 37%,
-//     rgba(255,255,255,0.05) 63%
-//   );
-//   background-size: 400% 100%;
-//   animation: shimmer 1.4s ease infinite;
-
-//   @keyframes shimmer {
-//     0% { background-position: 100% 0; }
-//     100% { background-position: 0 0; }
-//   }
-// `;
-
-// const FadeWrapper = styled.div<{ isVisible: boolean }>`
-//   opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
-//   transition: opacity 0.4s ease;
-// `;
-
-const TweetSlot = styled.div`
-  position: relative;
-  width: 100%;
-  max-width: 520px; /* 👈 controle real */
-  height: 520px;
-  overflow: hidden;
-
-  @media (max-width: 768px) {
-    max-width: 100%;
-    height: auto;
-    min-height: 480px;
-  }
+const ClientName = styled.h4`
+font-size:15px;
+font-weight:600;
 `;
 
-const RealTweet = styled.div<{ ready: boolean }>`
-  opacity: ${({ ready }) => (ready ? 1 : 0)};
-  transition: opacity 0.4s ease;
-  z-index: 1;
-
-  /* centro perfeito */
-  display: flex;
-  justify-content: center;
-
-  /* escala suave baseada na tela */
-  transform: scale(1);
-  transform-origin: top center;
-
-  iframe {
-    border-radius: 14px;
-    max-width: 100%;
-  }
-
-  @media (max-width: 768px) {
-    transform: scale(0.98);
-  }
-  @media (max-width: 500px) {
-    transform: scale(0.9);
-  }
+const ClientSubs = styled.span`
+font-size:12px;
+color:#aaa;
 `;
 
-/* ===== Fake Tweet ===== */
-const FakeTweet = styled.div`
-  position: absolute;
-  inset: 0;
-  padding: 20px;
-  border-radius: 16px;
-  background: #000;
-  border: 1px solid rgba(255,255,255,0.08);
-  z-index: 2;
+/* PREVIEW */
+
+const Preview = styled.div`
+width:520px;
+background:#0b0b0b;
+border-radius:18px;
+overflow:hidden;
+
+border:1px solid rgba(255,0,0,.25);
+
+box-shadow:
+0 0 30px rgba(255,0,0,.25);
+
+animation:${fadeIn} .6s ease;
 `;
 
-const FakeHeader = styled.div`
-  display: flex;
-  gap: 12px;
-  align-items: center;
+const Banner = styled.img`
+width:100%;
+height:180px;
+object-fit:cover;
 `;
 
-const FakeAvatar = styled.div`
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  background: #222;
+const PreviewContent = styled.div`
+display:flex;
+gap:20px;
+padding:25px;
 `;
 
-const shimmer = keyframes`
-  0% { background-position: 100% 0; }
-  100% { background-position: 0 0; }
+const PreviewAvatar = styled.img`
+width:70px;
+height:70px;
+border-radius:50%;
 `;
 
-const FakeLine = styled.div<{ w?: string }>`
-  height: 14px;
-  width: ${({ w }) => w || "100%"};
-  background: linear-gradient(90deg, #222 25%, #333 37%, #222 63%);
-  background-size: 400% 100%;
-  animation: ${shimmer} 1.4s infinite;
+const PreviewText = styled.div`
+display:flex;
+flex-direction:column;
 `;
 
-const FakeMedia = styled.div`
-  margin-top: 14px;
-  width: 100%;
-  height: 260px;
-  border-radius: 14px;
-  background: #222;
+const PreviewName = styled.h3`
+font-size:22px;
+font-weight:700;
 `;
 
-const ImageX = styled.img`
-  width: 28px;
-    height: 28px;
-    vertical-align: middle;
-    margin-left: 4px;
+const PreviewSubs = styled.span`
+color:#ff5c5c;
+font-size:13px;
+margin-bottom:10px;
+`;
+
+const PreviewDescription = styled.p`
+color:#bbb;
+line-height:1.5;
+font-size:14px;
 `;
