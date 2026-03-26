@@ -72,7 +72,8 @@ const SliderContent = styled.div`
 
 const TechBox = styled.div`
   // background: #5804c593;
-  background: #840303cf;
+  // background: #840303cf;
+  background: transparent;
   width: 100px;
   height: 100px;
   opacity: 0.6;

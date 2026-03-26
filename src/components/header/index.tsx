@@ -11,7 +11,7 @@ export default function Header(){
 
     useEffect(() => {
         const handleScroll = () => {
-            const sections = ["home", "videos", "shorts", "x", "socialmedia"];
+            const sections = ["home", "shorts", "highlight", "videos", "socialmedia"];
             const scrollPosition = window.scrollY + 100;
 
             for (let id of sections) {
@@ -48,22 +48,22 @@ export default function Header(){
                 </TooltipWrapper>
 
                 <TooltipWrapper>
-                    <NavItem href="#videos" $active={activeSection === "videos"}>
-                        <Tv2 size={18} />
-                    </NavItem>
-                    <TooltipText>Videos</TooltipText>
-                </TooltipWrapper>
-                                <TooltipWrapper>
                     <NavItem href="#shorts" $active={activeSection === "shorts"}>
-                        <LucideUser2 size={18} />
+                        <Tv2 size={18} />
                     </NavItem>
                     <TooltipText>Shorts</TooltipText>
                 </TooltipWrapper>
                                 <TooltipWrapper>
-                    <NavItem href="#x" $active={activeSection === "x"}>
+                    <NavItem href="#highlight" $active={activeSection === "highlight"}>
+                        <LucideUser2 size={18} />
+                    </NavItem>
+                    <TooltipText>Highlight</TooltipText>
+                </TooltipWrapper>
+                                <TooltipWrapper>
+                    <NavItem href="#videos" $active={activeSection === "videos"}>
                         <PanelTopClose size={18} />
                     </NavItem>
-                    <TooltipText>X</TooltipText>
+                    <TooltipText>Videos</TooltipText>
                 </TooltipWrapper>
                 <TooltipWrapper>
                     <NavItem href="#socialmedia" $active={activeSection === "socialmedia"}>

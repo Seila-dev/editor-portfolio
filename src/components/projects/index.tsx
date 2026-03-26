@@ -9,13 +9,13 @@ const Projects = () => {
 
   return (
     <div>
-      <Section id="videos">
+      <Section id="shorts">
         <Content>
           <VideoSection />
         </Content>
       </Section>
       <HighlightSection />
-      <OtherProjectsSection id="shorts">
+      <OtherProjectsSection id="videos">
 
 
 
