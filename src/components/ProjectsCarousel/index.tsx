@@ -2,10 +2,10 @@
 import styled from "styled-components";
 
 const videos = [
+  { id: "9LYEmgG8WoM", title: "ItsRJ Trial" },
+  { id: "ZkYtbBloA8w", title: "ItsPoachie video" },
   { id: "wZ821Jh7dks", title: "Client Long-form Intro" },
-  { id: "63PJ4r53nCk", title: "Client Full Long-form Video" },
   { id: "qW6ZUokrC8M", title: "Roblox Footage Trial #2" },
-  { id: "K2nubbiNrYk", title: "Roblox Footage Trial #1" },
 ];
 
 export const LongFormVideos = () => {
