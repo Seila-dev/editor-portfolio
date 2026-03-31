@@ -56,9 +56,11 @@ transform: translateY(0);
 
 const Section = styled.section`
   position: relative;
-  min-height: 100vh;
+  // min-height: 100vh;
 
-  padding: 120px 150px;
+  padding: 120px;
+  padding-top: 150px;
+  padding-bottom: 50px;
 
   display: flex;
   flex-direction: column;

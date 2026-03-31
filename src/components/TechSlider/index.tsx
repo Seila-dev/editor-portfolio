@@ -2,9 +2,9 @@ import styled, { keyframes } from "styled-components";
 
 import prLogo from "../../assets/premiere-pro.png";
 import psLogo from "../../assets/photoshop.png";
+import pokemonLogo from "../../assets/pokebola.png";
 import aeLogo from "../../assets/after-effects.png";
-import capcutLogo from "../../assets/capcut-icon.png";
-import robloxLogo from "../../assets/roblox-studio.png";
+// import capcutLogo from "../../assets/capcut-icon.png";
 // import nextLogo from "../../assets/nextjs.png";
 // import cssLogo from "../../assets/csslogo.png";
 // import cockroachLogo from "../../assets/cockroachdblogo.png";
@@ -16,7 +16,7 @@ import robloxLogo from "../../assets/roblox-studio.png";
 // import htmlLogo from "../../assets/htmllogo.png";
 // import nestLogo from "../../assets/nestLogo.png";
 
-const logos = [prLogo, psLogo, aeLogo, capcutLogo, robloxLogo, prLogo, psLogo, aeLogo, capcutLogo, robloxLogo, prLogo, psLogo, aeLogo, capcutLogo, robloxLogo];
+const logos = [prLogo, psLogo, aeLogo, pokemonLogo, prLogo, psLogo, aeLogo, pokemonLogo, prLogo, psLogo, aeLogo, pokemonLogo];
 
 export const TechSlider = () => {
     // Criamos múltiplas cópias para garantir um loop suave

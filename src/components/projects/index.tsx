@@ -9,11 +9,6 @@ const Projects = () => {
 
   return (
     <div>
-      <Section id="shorts">
-        <Content>
-          <VideoSection />
-        </Content>
-      </Section>
       <HighlightSection />
       <OtherProjectsSection id="videos">
 
@@ -30,6 +25,11 @@ const Projects = () => {
 
   <LongFormVideos />
 </OtherProjectsSection>
+      <Section id="shorts">
+        <Content>
+          <VideoSection />
+        </Content>
+      </Section>
     </div>
   );
 };
