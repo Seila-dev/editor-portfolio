@@ -2,8 +2,9 @@
 import styled from "styled-components";
 
 const videos = [
+  { id: "ZkYtbBloA8w", title: "ItsPoachie video" },
+  { id: "5hIW38ni1Ic", title: "Beating Pokémon Diamond with the Hardest to Catch Team!" }
   { id: "9LYEmgG8WoM", title: "ItsRJ Trial" },
-  { id: "ZkYtbBloA8w", title: "ItsPoachie video" }
   // { id: "wZ821Jh7dks", title: "Client Long-form Intro" },
   // { id: "qW6ZUokrC8M", title: "Roblox Footage Trial #2" },
 ];
