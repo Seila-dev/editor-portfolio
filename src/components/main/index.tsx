@@ -129,7 +129,7 @@ const handleCopyGmail = () => {
                         <a href="https://www.youtube.com/@AsyncEditor/videos" className="logo" target="_blank" rel="noopener noreferrer">
                             <img src={ytIcon} alt="Youtube icon" />
                         </a>
-                        <a href="https://www.linkedin.com/in/erickrodrigues-dev/" className="logo" target="_blank" rel="noopener noreferrer">
+                        <a href="https://x.com/AsyncEditor" className="logo" target="_blank" rel="noopener noreferrer">
                             <img src={xIcon} alt="X icon" />
                         </a>
                         <button className="logo" onClick={() => setIsDiscordOpen(true)}>
