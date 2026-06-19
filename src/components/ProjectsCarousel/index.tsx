@@ -2,12 +2,14 @@
 import styled from "styled-components";
 
 const videos = [
+  { id: "cSo4_s9w7pw", title: "Client Long-form Intro" },
   { id: "vdpA_fmeGL8", title: "Client Long-form Intro" },
   // https://youtu.be/cSo4_s9w7pw?si=8D28RWVNeFkN_Ip8
   // { id: "pmbxZXFSWPU", title: "Client Long-form Intro" },
   { id: "ZkYtbBloA8w", title: "ItsPoachie video" },
   { id: "5hIW38ni1Ic", title: "Beating Pokémon Diamond with the Hardest to Catch Team!" },
-  { id: "9LYEmgG8WoM", title: "ItsRJ Trial" },
+  // { id: "9LYEmgG8WoM", title: "ItsRJ Trial" },
+
   // { id: "wZ821Jh7dks", title: "Client Long-form Intro" },
   // { id: "qW6ZUokrC8M", title: "Roblox Footage Trial #2" },
 ];
