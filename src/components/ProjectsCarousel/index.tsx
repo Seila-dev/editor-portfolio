@@ -2,7 +2,7 @@
 import styled from "styled-components";
 
 const videos = [
-  { id: "cSo4_s9w7pw", title: "Client Long-form Intro" },
+  { id: "cdWySUSQaTE", title: "Client Long-form Intro" },
   { id: "vdpA_fmeGL8", title: "Client Long-form Intro" },
   // https://youtu.be/cSo4_s9w7pw?si=8D28RWVNeFkN_Ip8
   // { id: "pmbxZXFSWPU", title: "Client Long-form Intro" },
